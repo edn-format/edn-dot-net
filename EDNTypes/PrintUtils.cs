@@ -152,8 +152,16 @@ namespace EDNTypes
             stream.Write(bytes, 0, bytes.Length);
         }
 
+        private static Byte[] nullBytes = Encoding.UTF8.GetBytes("nil");
+
         public static void PrintEDNObjectToStream(object obj, Stream stream)
         {
+            if (obj == null)
+            {
+                stream.Write(nullBytes, 0, nullBytes.Length);
+                return;
+            }
+
             var printable = obj as IEDNPrintable;
             
             if (printable != null)

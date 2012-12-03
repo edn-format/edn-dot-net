@@ -20,13 +20,13 @@ module EDNReader =
     let parseDirectory dir = 
         let searchPattern = @"*.edn"
         let testFiles = Directory.GetFiles(dir, searchPattern, SearchOption.AllDirectories)
-        let results = [for f in testFiles do yield parseFile f]
+        let results = [for f in testFiles do yield! parseFile f]
         results
 
     let tryParseDirectory dir = 
         let searchPattern = @"*.edn"
         let testFiles = Directory.GetFiles(dir, searchPattern, SearchOption.AllDirectories)
-        let results = [for f in testFiles do yield
+        let results = [for f in testFiles do yield!
                                                 try
                                                     parseFile f
                                                 with
