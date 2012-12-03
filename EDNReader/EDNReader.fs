@@ -11,6 +11,9 @@ module EDNReader =
     let parseString str = 
         run (many1 parseValue) str |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map (defaultHandlerFuncMap defaultTagHandler)
 
+    let parseStream stream = 
+        runParserOnStream (many1 parseValue) () "ednStream" stream System.Text.Encoding.UTF8 |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map (defaultHandlerFuncMap defaultTagHandler)
+
     let parseFile fileName = 
         runParserOnFile (many1 parseValue) () fileName System.Text.Encoding.UTF8 |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map (defaultHandlerFuncMap defaultTagHandler)
 
