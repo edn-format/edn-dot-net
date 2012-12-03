@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EDNTypes
 {
-    public class EDNMap : IEnumerable<KeyValuePair<object, object>>, IEDNEnumerable
+    public class EDNMap : IEnumerable<KeyValuePair<object, object>>, IEDNEnumerable, IEDNPrintable
     {
         private Dictionary<object, object> ednMap;
 
@@ -148,5 +148,24 @@ namespace EDNTypes
             return !obj1.Equals(obj2);
         }
 
+
+        #region IEDNPrintable Members
+
+        public string PrintEDN()
+        {
+            return PrintUtils.WriteStreamToString(this);
+        }
+
+        static readonly Byte[] openMapBytes = Encoding.UTF8.GetBytes("{");
+        static readonly Byte[] closeMapBytes = Encoding.UTF8.GetBytes("}");
+
+        public void PrintEDN(System.IO.Stream stream)
+        {
+            stream.Write(openMapBytes, 0, openMapBytes.Length);
+            PrintUtils.PrintIEnumerableToEDN(this, stream);
+            stream.Write(closeMapBytes, 0, closeMapBytes.Length);
+        }
+
+        #endregion
     }
 }

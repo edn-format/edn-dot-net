@@ -1,6 +1,7 @@
 ﻿
 namespace EDNReader
 open System.Numerics
+open EDNTypes
 
 module EDNParserTypes =
     type EDNException(message : string) = 
@@ -52,13 +53,24 @@ module EDNParserTypes =
         abstract member getPrefix : unit -> string
         abstract member getName : unit -> string
 
+    let getSymbolString (symbol : IEDNSymbol )=
+        if System.String.IsNullOrWhiteSpace(symbol.getPrefix()) then 
+                System.String.Empty 
+        else symbol.getPrefix() + "/" 
+        + symbol.getName()
+
     type EDNSymbolType(prefix: string, name: string) = 
+        interface IEDNPrintable with
+            member this.PrintEDN(stream) =
+                PrintUtils.WriteEDNToStream(this.ToString(), stream)
+            member this.PrintEDN() = 
+                this.ToString()
         interface IEDNSymbol with
             member this.getPrefix() = prefix
             member this.getName() = name
             member this.CompareTo obj = 
                 this.ToString().CompareTo( obj.ToString())
-        override this.ToString() = prefix + "/" + name
+        override this.ToString() = getSymbolString this
         override this.GetHashCode() = 
             this.ToString().GetHashCode()
         override this.Equals (obj : System.Object) = 
@@ -71,13 +83,18 @@ module EDNParserTypes =
             else
                 false
 
-    type EDNKeywordType(prefix: string, name: string) = 
+    type EDNKeywordType(prefix: string, name: string) =
+        interface IEDNPrintable with
+            member this.PrintEDN(stream) =
+                PrintUtils.WriteEDNToStream(":" + this.ToString(), stream)
+            member this.PrintEDN() = 
+                ":" + this.ToString()
         interface IEDNSymbol with
             member this.getPrefix() = prefix
             member this.getName() = name
             member this.CompareTo obj = 
                 this.ToString().CompareTo( obj.ToString())
-        override this.ToString() = prefix + "/" + name
+        override this.ToString() = getSymbolString this
         override this.GetHashCode() = 
             this.ToString().GetHashCode()
         override this.Equals (obj : System.Object) = 

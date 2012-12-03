@@ -24,9 +24,9 @@ module TypeHandlers =
  
             | EDNFloat f -> f :> System.Object
 
-            | EDNList l -> new EDNVectorList (Seq.filter isNotCommentOrDiscard l |> Seq.map (defaultHandlerFuncMap taggedHandlerFn)) :> System.Object
+            | EDNList l -> new EDNList (Seq.filter isNotCommentOrDiscard l |> Seq.map (defaultHandlerFuncMap taggedHandlerFn)) :> System.Object
 
-            | EDNVector v -> new EDNVectorList (Array.filter isNotCommentOrDiscard v |> Array.map (defaultHandlerFuncMap taggedHandlerFn)) :> System.Object
+            | EDNVector v -> new EDNVector (Array.filter isNotCommentOrDiscard v |> Array.map (defaultHandlerFuncMap taggedHandlerFn)) :> System.Object
 
             | EDNSet l -> 
                 let filteredSeq = Seq.filter isNotCommentOrDiscard l

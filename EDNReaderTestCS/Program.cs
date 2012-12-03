@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -16,7 +17,22 @@ namespace EDNReaderTestCS
     {
         static void Main(string[] args)
         {
-            var r1 = EDNReader.EDNReader.parseString("[\n[1 2 3 {:a 5} \"Asdfsaf\" 5 6 7]]");
+            var r1 = EDNReader.EDNReader.parseString("[\n:pre/asdf [1 2 3 \"Asdfsaf\" 5 6 7 #{\"a\" 1 2 [7 8 9]} {[1 2] #{78 12} \"asdfa\" 4} ]]");
+
+            foreach (var ednObj in r1)
+            {
+                string teststr = ((IEDNPrintable)ednObj).PrintEDN();
+                using (var ms = new MemoryStream())
+                {
+
+                    PrintUtils.PrintEDNObjectToStream(ednObj, ms);
+
+                    ms.Position = 0;
+                    var sr = new StreamReader(ms);
+                    var myStr = sr.ReadToEnd();
+                }
+            }
+            
 
             //File parsting test
             var sw = System.Diagnostics.Stopwatch.StartNew();

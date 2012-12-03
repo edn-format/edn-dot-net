@@ -6,11 +6,13 @@ using System.Text;
 
 namespace EDNTypes
 {
-    public class EDNVectorList : IEnumerable<object>, IEDNEnumerable
+
+
+    public class EDNList : IEnumerable<object>, IEDNEnumerable, IEDNPrintable
     {
         private List<object> ednList;
 
-        public EDNVectorList(IEnumerable<object> coll)
+        public EDNList(IEnumerable<object> coll)
         {
             ednList = new List<object>(coll);
         }
@@ -70,7 +72,7 @@ namespace EDNTypes
         {
             if (ReferenceEquals(this, obj))
                 return true;
-            else if (obj.GetType() != typeof(EDNVectorList))
+            else if (obj.GetType() != typeof(EDNList))
                 return false;
             else if (obj.GetHashCode() != this.GetHashCode())
                 return false;
@@ -94,14 +96,56 @@ namespace EDNTypes
             }
         }
 
-        public static bool operator ==(EDNVectorList obj1, object obj2)
+        public static bool operator ==(EDNList obj1, object obj2)
         {
             return obj1.Equals(obj2);
         }
 
-        public static bool operator !=(EDNVectorList obj1, object obj2)
+        public static bool operator !=(EDNList obj1, object obj2)
         {
             return !obj1.Equals(obj2);
+        }
+
+        #region IEDNPrintable Members
+
+        public virtual string PrintEDN()
+        {
+            return PrintUtils.WriteStreamToString(this);
+        }
+
+        static readonly Byte[] openParenBytes = Encoding.UTF8.GetBytes("(");
+        static readonly Byte[] closeParenBytes = Encoding.UTF8.GetBytes(")");
+
+        public virtual void PrintEDN(System.IO.Stream stream)
+        {
+            stream.Write(openParenBytes, 0, openParenBytes.Length);
+            PrintUtils.PrintIEnumerableToEDN(this, stream);
+            stream.Write(closeParenBytes, 0, closeParenBytes.Length);
+        }
+
+        #endregion
+    }
+
+
+    public class EDNVector : EDNList
+    {
+        public EDNVector(IEnumerable<object> coll) : base(coll)
+        {
+        }
+
+        public override string PrintEDN()
+        {
+            return PrintUtils.WriteStreamToString(this);
+        }
+
+        static readonly Byte[] openBracketBytes = Encoding.UTF8.GetBytes("[");
+        static readonly Byte[] closeBracketBytes = Encoding.UTF8.GetBytes("]");
+
+        public override void PrintEDN(System.IO.Stream stream)
+        {
+            stream.Write(openBracketBytes, 0, openBracketBytes.Length);
+            PrintUtils.PrintIEnumerableToEDN(this, stream);
+            stream.Write(closeBracketBytes, 0, closeBracketBytes.Length);
         }
     }
 }

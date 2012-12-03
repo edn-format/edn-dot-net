@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EDNTypes
 {
-    public class EDNSet : IEnumerable<object>, IEDNEnumerable
+    public class EDNSet : IEnumerable<object>, IEDNEnumerable, IEDNPrintable
     {
         private HashSet<object> ednHashSet = null;
 
@@ -99,5 +99,24 @@ namespace EDNTypes
         {
             return !obj1.Equals(obj2);
         }
+
+        #region IEDNPrintable Members
+
+        static readonly Byte[] openSetBytes = Encoding.UTF8.GetBytes("#{");
+        static readonly Byte[] closeSetBytes = Encoding.UTF8.GetBytes("}");
+
+        public string PrintEDN()
+        {
+            return PrintUtils.WriteStreamToString(this);
+        }
+
+        public void PrintEDN(System.IO.Stream stream)
+        {
+            stream.Write(openSetBytes, 0, openSetBytes.Length);
+            PrintUtils.PrintIEnumerableToEDN(this, stream);
+            stream.Write(closeSetBytes, 0, closeSetBytes.Length);
+        }
+
+        #endregion
     }
 }
