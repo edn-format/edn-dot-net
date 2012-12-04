@@ -7,10 +7,10 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{72e03163-0a92-46c5-8201-78eb4a771beb}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>EDNReader</RootNamespace>
-    <AssemblyName>EDNReader</AssemblyName>
+    <RootNamespace>EDNReaderWriter</RootNamespace>
+    <AssemblyName>EDNReaderWriter</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <Name>EDNReader</Name>
+    <Name>EDNReaderWriter</Name>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -22,7 +22,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Debug\EDNReader.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\EDNReaderWriter.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,7 +31,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
-    <DocumentationFile>bin\Release\EDNReader.XML</DocumentationFile>
+    <DocumentationFile>bin\Release\EDNReaderWriter.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FParsec">

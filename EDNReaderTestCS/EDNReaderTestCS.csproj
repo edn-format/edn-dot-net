@@ -52,17 +52,17 @@
   <Choose>
     <When Condition="'$(SolutionName)'=='edn-dot-net-2012'">
       <ItemGroup>
-        <ProjectReference Include="..\EDNReader\EDNReader-2012.fsproj">
+        <ProjectReference Include="..\EDNReaderWriter\EDNReaderWriter-2012.fsproj">
           <Project>{8a6173db-bc8c-42dc-ba02-72a9726212f7}</Project>
-          <Name>EDNReader-2012</Name>
+          <Name>EDNReaderWriter-2012</Name>
         </ProjectReference>
       </ItemGroup>
     </When>
     <When Condition="'$(SolutionName)'=='edn-dot-net'">
       <ItemGroup>
-        <ProjectReference Include="..\EDNReader\EDNReader.fsproj">
+        <ProjectReference Include="..\EDNReaderWriter\EDNReaderWriter.fsproj">
           <Project>{72e03163-0a92-46c5-8201-78eb4a771beb}</Project>
-          <Name>EDNReader</Name>
+          <Name>EDNReaderWriter</Name>
         </ProjectReference>
       </ItemGroup>
     </When>

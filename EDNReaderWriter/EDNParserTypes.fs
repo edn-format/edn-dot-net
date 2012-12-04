@@ -1,5 +1,5 @@
 ﻿
-namespace EDNReader
+namespace EDNReaderWriter
 open System.Numerics
 open EDNTypes
 

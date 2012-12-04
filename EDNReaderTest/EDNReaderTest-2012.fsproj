@@ -57,8 +57,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
-    <ProjectReference Include="..\EDNReader\EDNReader-2012.fsproj">
-      <Name>EDNReader-2012</Name>
+    <ProjectReference Include="..\EDNReaderWriter\EDNReaderWriter-2012.fsproj">
+      <Name>EDNReaderWriter-2012</Name>
       <Project>{8a6173db-bc8c-42dc-ba02-72a9726212f7}</Project>
       <Private>True</Private>
     </ProjectReference>

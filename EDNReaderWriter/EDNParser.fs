@@ -1,10 +1,10 @@
 ﻿
-namespace EDNReader
+namespace EDNReaderWriter
 module EDNParser =
     open System.Text.RegularExpressions
     open System.Numerics
     open FParsec
-    open EDNReader.EDNParserTypes
+    open EDNReaderWriter.EDNParserTypes
 
     //trace function from fparsec docs
     let (<!>) (p: Parser<_,_>) label : Parser<_,_> =

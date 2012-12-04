@@ -3,9 +3,9 @@
 namespace EDNReaderTest
 module test =
     open FParsec
-    open EDNReader.EDNParserTypes
-    open EDNReader.EDNParser
-    open EDNReader.TypeHandlers
+    open EDNReaderWriter.EDNParserTypes
+    open EDNReaderWriter.EDNParser
+    open EDNReaderWriter.TypeHandlers
 
     open System.Diagnostics
     open System.IO

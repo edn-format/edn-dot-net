@@ -2,21 +2,21 @@
 
 //Evaluate the following block to load everything you need into the F# interactive
 //START
-#I "C:\\dev\\edn-dot-net\\EDNReader\\bin\\Debug";;
+#I "C:\\dev\\edn-dot-net\\EDNReaderWriter\\bin\\Debug";;
 #r "FParsec";;
 #r "FParsecCS";;
 #r "EDNTypes";;
 
 open FParsec;;
 
-#load "C:\\dev\\edn-dot-net\\EDNReader\\EDNParserTypes.fs";;
-open EDNReader.EDNParserTypes;;
-#load "C:\\dev\\edn-dot-net\\EDNReader\\TypeHandlers.fs";;
-open EDNReader.TypeHandlers;;
-#load "C:\\dev\\edn-dot-net\\EDNReader\\EDNParser.fs";;
-open EDNReader.EDNParser;;
-#load "C:\\dev\\edn-dot-net\\EDNReader\\EDNReader.fs";;
-open EDNReader.EDNReader;;
+#load "C:\\dev\\edn-dot-net\\EDNReaderWriter\\EDNParserTypes.fs";;
+open EDNReaderWriter.EDNParserTypes;;
+#load "C:\\dev\\edn-dot-net\\EDNReaderWriter\\TypeHandlers.fs";;
+open EDNReaderWriter.TypeHandlers;;
+#load "C:\\dev\\edn-dot-net\\EDNReaderWriter\\EDNParser.fs";;
+open EDNReaderWriter.EDNParser;;
+#load "C:\\dev\\edn-dot-net\\EDNReaderWriter\\EDNReader.fs";;
+open EDNReaderWriter.EDNReader;;
 //END
 
 

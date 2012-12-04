@@ -1,21 +1,23 @@
-﻿namespace EDNReader
+﻿namespace EDNReaderWriter
 module EDNReader =
     open System.Text.RegularExpressions
     open System.Numerics
     open System.IO
     open FParsec
-    open EDNReader.EDNParserTypes
-    open EDNReader.EDNParser
-    open EDNReader.TypeHandlers
+    open EDNReaderWriter.EDNParserTypes
+    open EDNReaderWriter.EDNParser
+    open EDNReaderWriter.TypeHandlers
+
+    let defaultHandler = new TypeHandlers.DefaultTypeHandler()
 
     let parseString str = 
-        run (many1 parseValue) str |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map (defaultHandlerFuncMap defaultTagHandler)
+        run (many1 parseValue) str |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map defaultHandler.handleValue
 
     let parseStream stream = 
-        runParserOnStream (many1 parseValue) () "ednStream" stream System.Text.Encoding.UTF8 |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map (defaultHandlerFuncMap defaultTagHandler)
+        runParserOnStream (many1 parseValue) () "ednStream" stream System.Text.Encoding.UTF8 |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map defaultHandler.handleValue
 
     let parseFile fileName = 
-        runParserOnFile (many1 parseValue) () fileName System.Text.Encoding.UTF8 |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map (defaultHandlerFuncMap defaultTagHandler)
+        runParserOnFile (many1 parseValue) () fileName System.Text.Encoding.UTF8 |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map defaultHandler.handleValue
 
     let parseDirectory dir = 
         let searchPattern = @"*.edn"

@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FFC945
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EDNReader-2012", "EDNReader\EDNReader-2012.fsproj", "{8A6173DB-BC8C-42DC-BA02-72A9726212F7}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EDNReaderWriter-2012", "EDNReaderWriter\EDNReaderWriter-2012.fsproj", "{8A6173DB-BC8C-42DC-BA02-72A9726212F7}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EDNReaderTest-2012", "EDNReaderTest\EDNReaderTest-2012.fsproj", "{3E4B81C4-0B07-4B35-8337-268050F70894}"
 EndProject
