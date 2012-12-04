@@ -17,8 +17,8 @@ namespace EDNReaderTestCS
     {
         static void Main(string[] args)
         {
-            //var r1 = EDNReader.EDNReader.parseString("[\n:pre/asdf [1 2 3 \"Asdfsaf\" 5 6 7 #{\"a\" 1 2 [7 8 9]} {[1 2] #{78 12} \"asdfa\" 4} ]]");
-            var r1 = EDNReader.parseFile("C:\\dev\\edn-test-data\\hierarchical.edn");
+            //var r1 = EDNReader.EDNReaderFuncs.parseString("[\n:pre/asdf [1 2 3 \"Asdfsaf\" 5 6 7 #{\"a\" 1 2 [7 8 9]} {[1 2] #{78 12} \"asdfa\" 4} ]]");
+            var r1 = EDNReader.EDNReaderFuncs.parseFile("C:\\dev\\edn-test-data\\hierarchical.edn");
 
             foreach (var ednObj in r1)
             {
@@ -37,12 +37,12 @@ namespace EDNReaderTestCS
 
             //File parsting test
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var rDir = EDNReader.parseDirectory("C:\\dev\\edn-test-data\\hierarchy_noisy_500");
+            var rDir = EDNReader.EDNReaderFuncs.parseDirectory("C:\\dev\\edn-test-data\\hierarchy_noisy_500");
             sw.Stop();
 
             Console.WriteLine(String.Format("Elapsed MS: {0}", sw.ElapsedMilliseconds));
 
-            var rFile = EDNReader.parseFile("C:\\dev\\edn-test-data\\noisy.edn");
+            var rFile = EDNReader.EDNReaderFuncs.parseFile("C:\\dev\\edn-test-data\\noisy.edn");
 
             /*
             var r2 = Funcs.Flatten(r1);
