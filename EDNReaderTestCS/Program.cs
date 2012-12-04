@@ -17,8 +17,10 @@ namespace EDNReaderTestCS
     {
         static void Main(string[] args)
         {
-            //var r1 = EDNReader.EDNReaderFuncs.parseString("[\n:pre/asdf [1 2 3 \"Asdfsaf\" 5 6 7 #{\"a\" 1 2 [7 8 9]} {[1 2] #{78 12} \"asdfa\" 4} ]]");
-            var r1 = EDNReader.EDNReaderFuncs.parseFile("C:\\dev\\edn-test-data\\hierarchical.edn");
+            var r1 = EDNReader.EDNReaderFuncs.parseString("[\n:pre/asdf [1 2 3 \"Asdfsaf\" 5 6 7 #{\"a\" 1 2 [7 8 9]} {[1 2] #{78 12} \"asdfa\" 4} ]]");
+            r1 = EDNReader.EDNReaderFuncs.parseString("[1 2 {:a 3 1.2 \\c {1 2} 4}]", new SampleCustomHandler());
+            //var r1 = EDNReader.EDNReaderFuncs. parseFile("C:\\dev\\edn-test-data\\hierarchical.edn");
+
 
             foreach (var ednObj in r1)
             {
