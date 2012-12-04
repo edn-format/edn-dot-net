@@ -45,6 +45,7 @@
     <Compile Include="EDNReader.fs" />
     <None Include="Script.fsx" />
     <None Include="packages.config" />
+    <Compile Include="EDNWriter.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FParsec">

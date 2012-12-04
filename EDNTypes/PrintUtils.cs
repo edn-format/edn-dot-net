@@ -12,7 +12,7 @@ namespace EDNTypes
 {
     public static class PrintUtils
     {
-        private static CodeDomProvider cSharpProvider = CodeDomProvider.CreateProvider("CSharp");
+        private static readonly CodeDomProvider cSharpProvider = CodeDomProvider.CreateProvider("CSharp");
 
         /// <summary>
         /// Serializes the object graph as a character string to a stream
