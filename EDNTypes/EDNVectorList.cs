@@ -119,15 +119,15 @@ namespace EDNTypes
 
         #region IEDNPrintable Members
 
-        public virtual string PrintEDN()
+        public virtual string PrintEDN(IPrintHandler handler)
         {
-            return PrintUtils.WriteStreamToString(this);
+            return PrintUtils.WritePrintableToString(this, handler);
         }
 
-        public virtual void PrintEDN(System.IO.Stream stream)
+        public virtual void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
         {
             stream.Write(PrintUtils.openListBytes, 0, PrintUtils.openListBytes.Length);
-            PrintUtils.PrintIEnumerableToEDN(this, stream);
+            handler.handleEnumerable(this, stream);
             stream.Write(PrintUtils.closeListBytes, 0, PrintUtils.closeListBytes.Length);
         }
 
@@ -141,15 +141,15 @@ namespace EDNTypes
         {
         }
 
-        public override string PrintEDN()
+        public override string PrintEDN(IPrintHandler handler)
         {
-            return PrintUtils.WriteStreamToString(this);
+            return PrintUtils.WritePrintableToString(this, handler);
         }
 
-        public override void PrintEDN(System.IO.Stream stream)
+        public override void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
         {
             stream.Write(PrintUtils.openVectorBytes, 0, PrintUtils.openVectorBytes.Length);
-            PrintUtils.PrintIEnumerableToEDN(this, stream);
+            handler.handleEnumerable(this, stream);
             stream.Write(PrintUtils.closeVectorBytes, 0, PrintUtils.closeVectorBytes.Length);
         }
 

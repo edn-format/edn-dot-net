@@ -14,12 +14,12 @@ namespace EDNTypes
         /// be forced to collect "the world" more often. Consider using the PrintEDN(stream) method.
         /// </summary>
         /// <returns>The EDN string</returns>
-        string PrintEDN();
+        string PrintEDN(IPrintHandler handler);
 
         /// <summary>
         /// Serializes the object graph as an EDN string to the stream.
         /// </summary>
         /// <param name="stream"></param>
-        void PrintEDN(Stream stream);
+        void PrintEDN(Stream stream, IPrintHandler handler);
     }
 }

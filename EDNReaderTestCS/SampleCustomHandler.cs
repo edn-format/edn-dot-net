@@ -12,7 +12,7 @@ namespace EDNReaderTestCS
     /// <summary>
     /// Sample EDN reader handler. Converts EDN maps to Dictionary<object, object> instead of EDNMap.
     /// </summary>
-    public class SampleCustomHandler : TypeHandlers.DefaultTypeHandler
+    public class SampleCustomHandler : TypeHandlers.BaseTypeHandler
     {
         public override object handleValue(EDNParserTypes.EDNValueParsed ednValueParsed)
         {

@@ -45,6 +45,7 @@
     <None Include="Script.fsx" />
     <Compile Include="EDNReader.fs" />
     <None Include="packages.config" />
+    <Compile Include="PrintHandlers.fs" />
     <Compile Include="EDNWriter.fs" />
   </ItemGroup>
   <ItemGroup>
