@@ -16,22 +16,14 @@ namespace EDNTypes
             this.name = name;
         }
 
-        private string getSymbolString()
-        {
-            if (System.String.IsNullOrWhiteSpace(prefix))
-                return name;
-            else
-                return prefix + "/" + name;
-        }
-
         public override string ToString()
         {
-            return getSymbolString();
+            return Utils.getSymbolString(prefix, name);
         }
 
         public override int GetHashCode()
         {
-            return getSymbolString().GetHashCode();
+            return Utils.getSymbolString(prefix, name).GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -64,7 +56,7 @@ namespace EDNTypes
 
         public int CompareTo(object obj)
         {
-            return getSymbolString().CompareTo(obj.ToString());
+            return Utils.getSymbolString(prefix, name).CompareTo(obj.ToString());
         }
 
         #endregion
