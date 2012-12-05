@@ -39,9 +39,9 @@ module TypeHandlers =
                                     |> Seq.map (fun v -> (this.handleValue v))
                     new EDNMap(newSeq) :> System.Object
 
-                | EDNSymbol s -> new EDNSymbolType(s.prefix, s.name) :> System.Object
+                | EDNSymbol s -> new EDNSymbol(s.prefix, s.name) :> System.Object
 
-                | EDNKeyword k -> new EDNKeywordType(k.prefix, k.name) :> System.Object
+                | EDNKeyword k -> new EDNKeyword(k.prefix, k.name) :> System.Object
 
                 | EDNTaggedValue (s, v) -> this.tagHandler (s, v)
 

@@ -47,7 +47,7 @@ module EDNParserTypes =
         match v.ednValue with 
         | EDNComment _ | EDNDiscard _ -> false
         | _ -> true
-
+        (*
     type IEDNSymbol =
         inherit System.IComparable
         abstract member getPrefix : unit -> string
@@ -106,3 +106,4 @@ module EDNParserTypes =
                 true
             else
                 false
+                *)
