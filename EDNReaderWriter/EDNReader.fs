@@ -19,8 +19,8 @@ module EDNReader =
         static member parseStream stream = EDNReaderFuncs.parseStream(stream, defaultHandler)
 
         static member parseStream(stream, (handler : DefaultTypeHandler)) = 
-            runParserOnStream (many1 parseValue) () "ednStream" stream System.Text.Encoding.UTF8 |> getValueFromResult 
-                |> List.filter isNotCommentOrDiscard |> List.map handler.handleValue
+            runParserOnStream parseValue () "ednStream" stream System.Text.Encoding.UTF8 |> getValueFromResult 
+                |> handler.handleValue
 
         static member parseFile fileName = EDNReaderFuncs.parseFile(fileName, defaultHandler)
 
