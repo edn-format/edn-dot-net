@@ -82,16 +82,16 @@ namespace EDNReaderTestCS
 
         public static void TestWriter()
         {
-            var r1 = EDNReader.EDNReaderFuncs.parseString("[\n:pre/asdf [1 2 3 \"Asdfsaf\" 5 6 7 #{\"a\" 1 2 [7 8 9]} {[1 2] #{78 12} \"asdfa\" 4} ]]");
+            var r1 = EDNReader.EDNReaderFuncs.parseString("[\n:pre/asdf [1 2 3 \"Asdfsaf\" 5 (8 7 2 nil) nil 6 7 #{\"a\" 1 2 [7 8 9]} {[1 2] #{78 12} \"asdfa\" 4} ]]");
 
             foreach (var ednObj in r1)
             {
-                string teststr = ((IEDNPrintable)ednObj).PrintEDN();
+                string teststr = EDNWriter.EDNWriterFuncs.writeString(ednObj);
                 Console.WriteLine("Print String: {0}", teststr);
                 using (var ms = new MemoryStream())
                 {
 
-                    PrintUtils.PrintEDNObjectToStream(ednObj, ms);
+                    EDNWriter.EDNWriterFuncs.writeStream(ednObj, ms);
 
                     ms.Position = 0;
                     var sr = new StreamReader(ms);

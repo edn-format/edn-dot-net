@@ -157,19 +157,16 @@ namespace EDNTypes
 
         #region IEDNPrintable Members
 
-        public string PrintEDN()
+        public string PrintEDN(IPrintHandler handler)
         {
-            return PrintUtils.WriteStreamToString(this);
+            return PrintUtils.WritePrintableToString(this, handler);
         }
 
-        static readonly Byte[] openMapBytes = Encoding.UTF8.GetBytes("{");
-        static readonly Byte[] closeMapBytes = Encoding.UTF8.GetBytes("}");
-
-        public void PrintEDN(System.IO.Stream stream)
+        public void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
         {
-            stream.Write(openMapBytes, 0, openMapBytes.Length);
-            PrintUtils.PrintIEnumerableToEDN(this, stream);
-            stream.Write(closeMapBytes, 0, closeMapBytes.Length);
+            stream.Write(PrintUtils.openMapBytes, 0, PrintUtils.openMapBytes.Length);
+            handler.handleEnumerable(this, stream);
+            stream.Write(PrintUtils.closeMapBytes, 0, PrintUtils.closeMapBytes.Length);
         }
 
         #endregion

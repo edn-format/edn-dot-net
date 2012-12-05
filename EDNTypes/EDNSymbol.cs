@@ -65,12 +65,12 @@ namespace EDNTypes
 
         #region IEDNPrintable Members
 
-        public string PrintEDN()
+        public string PrintEDN(IPrintHandler handler)
         {
             return Utils.getSymbolString(prefix, name);
         }
 
-        public void PrintEDN(System.IO.Stream stream)
+        public void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
         {
             PrintUtils.WriteEDNToStream(this.ToString(), stream);
         }

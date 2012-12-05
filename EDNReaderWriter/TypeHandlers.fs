@@ -4,7 +4,7 @@ namespace EDNReaderWriter
 module TypeHandlers =
     open EDNReaderWriter.EDNParserTypes
     open EDNTypes
-    type public DefaultTypeHandler() = 
+    type public BaseTypeHandler() = 
         abstract member handleValue: EDNValueParsed -> System.Object
         default this.handleValue value = 
             try
