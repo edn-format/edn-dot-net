@@ -8,7 +8,7 @@ module EDNReader =
     open EDNReaderWriter.EDNParser
     open EDNReaderWriter.TypeHandlers
 
-    let defaultHandler = new TypeHandlers.DefaultTypeHandler()
+    let defaultHandler = new EDNReaderWriter.TypeHandlers.DefaultTypeHandler()
 
     type public EDNReaderFuncs =
         static member parseString str = EDNReaderFuncs.parseString(str, defaultHandler)
