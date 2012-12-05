@@ -28,6 +28,8 @@ namespace EDNTypes
 
         public static readonly Byte[] spaceBytes = Encoding.UTF8.GetBytes(" ");
 
+        public static readonly Byte[] nullBytes = Encoding.UTF8.GetBytes("nil");
+
         /// <summary>
         /// Serializes the object graph as a character string to a stream
         /// </summary>
@@ -165,8 +167,6 @@ namespace EDNTypes
             var bytes = Encoding.UTF8.GetBytes(edn);
             stream.Write(bytes, 0, bytes.Length);
         }
-
-        private static Byte[] nullBytes = Encoding.UTF8.GetBytes("nil");
 
         public static void PrintEDNObjectToStream(object obj, Stream stream)
         {
