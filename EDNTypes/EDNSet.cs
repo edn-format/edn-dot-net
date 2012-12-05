@@ -65,7 +65,9 @@ namespace EDNTypes
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(this, obj))
+            if (obj == null)
+                return false;
+            else if (ReferenceEquals(this, obj))
                 return true;
             else if (obj.GetType() != typeof(EDNSet))
                 return false;

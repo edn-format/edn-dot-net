@@ -111,7 +111,9 @@ namespace EDNTypes
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(this, obj))
+            if (obj == null)
+                return false;
+            else if (ReferenceEquals(this, obj))
                 return true;
             else if (obj.GetType() != typeof(EDNMap))
                 return false;
@@ -128,9 +130,13 @@ namespace EDNTypes
                 while (enum1.MoveNext())
                 {
                     var kvp = (KeyValuePair<object, object>)enum1.Current;
-                    if (!ednMap.ContainsKey(kvp.Key))
+                    if (!this.ContainsKey(kvp.Key))
                         return false;
-                    else if (!ednMap[kvp.Key].Equals(kvp.Value))
+                    else if (ReferenceEquals(this[kvp.Key], kvp.Value)) //check that values have same reference (including null)
+                        continue;
+                    else if (this[kvp.Key] != null && !this[kvp.Key].Equals(kvp.Value))
+                        return false;
+                    else if (this[kvp.Key] == null && kvp.Value != null)
                         return false;
                 }
 

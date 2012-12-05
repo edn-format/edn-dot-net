@@ -70,9 +70,16 @@ namespace EDNTypes
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(this, obj))
+            return InternalEquals<EDNList>(obj);
+        }
+
+        public  bool InternalEquals<T>(object obj)
+        {
+            if (obj == null)
+                return false;
+            else if (ReferenceEquals(this, obj))
                 return true;
-            else if (obj.GetType() != typeof(EDNList))
+            else if (obj.GetType() != typeof(T))
                 return false;
             else if (obj.GetHashCode() != this.GetHashCode())
                 return false;
@@ -88,7 +95,11 @@ namespace EDNTypes
 
                 while (enum1.MoveNext() && enum2.MoveNext())
                 {
-                    if (!enum1.Current.Equals(enum2.Current))
+                    if (ReferenceEquals(enum1.Current, enum2.Current))
+                        continue;
+                    else if (enum1.Current != null && !enum1.Current.Equals(enum2.Current))
+                        return false;
+                    else if (enum1.Current == null && enum2.Current != null)
                         return false;
                 }
 
@@ -146,6 +157,16 @@ namespace EDNTypes
             stream.Write(openBracketBytes, 0, openBracketBytes.Length);
             PrintUtils.PrintIEnumerableToEDN(this, stream);
             stream.Write(closeBracketBytes, 0, closeBracketBytes.Length);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return InternalEquals<EDNVector>(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 }

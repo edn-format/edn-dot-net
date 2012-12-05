@@ -28,7 +28,9 @@ namespace EDNTypes
 
         public override bool Equals(object obj)
         {
-            if(System.Object.ReferenceEquals(this, obj))
+            if (obj == null)
+                return false;
+            else if(System.Object.ReferenceEquals(this, obj))
                 return true;
             else if(obj.GetType() != typeof(EDNSymbol))
                 return false;
