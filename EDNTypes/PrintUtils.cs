@@ -26,6 +26,8 @@ namespace EDNTypes
         public static readonly Byte[] openSetBytes = Encoding.UTF8.GetBytes("#{");
         public static readonly Byte[] closeSetBytes = Encoding.UTF8.GetBytes("}");
 
+        public static readonly Byte[] spaceBytes = Encoding.UTF8.GetBytes(" ");
+
         /// <summary>
         /// Serializes the object graph as a character string to a stream
         /// </summary>
@@ -205,8 +207,6 @@ namespace EDNTypes
                     PrintEDN(obj, stream);
             }
         }
-
-        public static Byte[] spaceBytes = Encoding.UTF8.GetBytes(" ");
 
         public static void PrintIEnumerableToEDN(IEnumerable enumerable, System.IO.Stream stream)
         {
