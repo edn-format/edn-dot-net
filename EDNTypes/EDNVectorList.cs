@@ -124,14 +124,11 @@ namespace EDNTypes
             return PrintUtils.WriteStreamToString(this);
         }
 
-        static readonly Byte[] openParenBytes = Encoding.UTF8.GetBytes("(");
-        static readonly Byte[] closeParenBytes = Encoding.UTF8.GetBytes(")");
-
         public virtual void PrintEDN(System.IO.Stream stream)
         {
-            stream.Write(openParenBytes, 0, openParenBytes.Length);
+            stream.Write(PrintUtils.openListBytes, 0, PrintUtils.openListBytes.Length);
             PrintUtils.PrintIEnumerableToEDN(this, stream);
-            stream.Write(closeParenBytes, 0, closeParenBytes.Length);
+            stream.Write(PrintUtils.closeListBytes, 0, PrintUtils.closeListBytes.Length);
         }
 
         #endregion
@@ -149,14 +146,11 @@ namespace EDNTypes
             return PrintUtils.WriteStreamToString(this);
         }
 
-        static readonly Byte[] openBracketBytes = Encoding.UTF8.GetBytes("[");
-        static readonly Byte[] closeBracketBytes = Encoding.UTF8.GetBytes("]");
-
         public override void PrintEDN(System.IO.Stream stream)
         {
-            stream.Write(openBracketBytes, 0, openBracketBytes.Length);
+            stream.Write(PrintUtils.openVectorBytes, 0, PrintUtils.openVectorBytes.Length);
             PrintUtils.PrintIEnumerableToEDN(this, stream);
-            stream.Write(closeBracketBytes, 0, closeBracketBytes.Length);
+            stream.Write(PrintUtils.closeVectorBytes, 0, PrintUtils.closeVectorBytes.Length);
         }
 
         public override bool Equals(object obj)

@@ -162,14 +162,11 @@ namespace EDNTypes
             return PrintUtils.WriteStreamToString(this);
         }
 
-        static readonly Byte[] openMapBytes = Encoding.UTF8.GetBytes("{");
-        static readonly Byte[] closeMapBytes = Encoding.UTF8.GetBytes("}");
-
         public void PrintEDN(System.IO.Stream stream)
         {
-            stream.Write(openMapBytes, 0, openMapBytes.Length);
+            stream.Write(PrintUtils.openMapBytes, 0, PrintUtils.openMapBytes.Length);
             PrintUtils.PrintIEnumerableToEDN(this, stream);
-            stream.Write(closeMapBytes, 0, closeMapBytes.Length);
+            stream.Write(PrintUtils.closeMapBytes, 0, PrintUtils.closeMapBytes.Length);
         }
 
         #endregion

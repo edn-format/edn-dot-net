@@ -104,9 +104,6 @@ namespace EDNTypes
 
         #region IEDNPrintable Members
 
-        static readonly Byte[] openSetBytes = Encoding.UTF8.GetBytes("#{");
-        static readonly Byte[] closeSetBytes = Encoding.UTF8.GetBytes("}");
-
         public string PrintEDN()
         {
             return PrintUtils.WriteStreamToString(this);
@@ -114,9 +111,9 @@ namespace EDNTypes
 
         public void PrintEDN(System.IO.Stream stream)
         {
-            stream.Write(openSetBytes, 0, openSetBytes.Length);
+            stream.Write(PrintUtils.openSetBytes, 0, PrintUtils.openSetBytes.Length);
             PrintUtils.PrintIEnumerableToEDN(this, stream);
-            stream.Write(closeSetBytes, 0, closeSetBytes.Length);
+            stream.Write(PrintUtils.closeSetBytes, 0, PrintUtils.closeSetBytes.Length);
         }
 
         #endregion

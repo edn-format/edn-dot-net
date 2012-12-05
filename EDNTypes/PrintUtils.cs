@@ -14,6 +14,18 @@ namespace EDNTypes
     {
         private static readonly CodeDomProvider cSharpProvider = CodeDomProvider.CreateProvider("CSharp");
 
+        public static readonly Byte[] openVectorBytes = Encoding.UTF8.GetBytes("[");
+        public static readonly Byte[] closeVectorBytes = Encoding.UTF8.GetBytes("]");
+
+        public static readonly Byte[] openListBytes = Encoding.UTF8.GetBytes("(");
+        public static readonly Byte[] closeListBytes = Encoding.UTF8.GetBytes(")");
+
+        public static readonly Byte[] openMapBytes = Encoding.UTF8.GetBytes("{");
+        public static readonly Byte[] closeMapBytes = Encoding.UTF8.GetBytes("}");
+
+        public static readonly Byte[] openSetBytes = Encoding.UTF8.GetBytes("#{");
+        public static readonly Byte[] closeSetBytes = Encoding.UTF8.GetBytes("}");
+
         /// <summary>
         /// Serializes the object graph as a character string to a stream
         /// </summary>
