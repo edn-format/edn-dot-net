@@ -113,6 +113,10 @@ namespace EDNReaderTestCS
         }
 
 
-        const string TEST_STR_SmallHierarchy = "[\n:pre/asdf [1 2 3 \"Asdfsaf\" 5 6 7 #{\"a\" 1 2 [7 8 9] nil} {[1 2] #{78 12} \"asdfa\" 4} foo]]";
+        const string TEST_STR_SmallHierarchy = 
+            @"[
+                :pre/asdf 
+                    [1 2 3 ""Asdfsaf"" 5 6 7 #{""a"" 1 2 [7 8 9], nil} {[1 2] ,#{78 12} nil 1 
+        ,, ""asdfa"" 4 :foo nil} foo]]";
     }
 }
