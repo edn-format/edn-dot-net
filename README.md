@@ -24,9 +24,11 @@ The ability to customize serialization and deserilization, e.g.:
 
 # Serialization
 ## EDNReaderWriter.EDNWriter.EDNWriterFuncs  
+* writeString - doc  
+* writeStream - doc  
 
 # Parser  
-All of the parsing functionality is exposed if you want to work directly with the EDN syntax tree.
+The parsing functionality is exposed if you want to work directly with the EDN syntax tree.
 
 ## EDNReaderWriter.EDNParser.EDNParserFuncs  
 Here is where you will find conveniant funtions for generating syntax trees for EDN data  
@@ -34,6 +36,3 @@ Here is where you will find conveniant funtions for generating syntax trees for 
 * parseFile - doc  
 * parseDirectory - doc  
 * parseStream - doc  
-
-## EDNReaderWriter.EDNParser  
-This is the actual parser.  

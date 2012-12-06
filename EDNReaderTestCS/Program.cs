@@ -119,9 +119,11 @@ namespace EDNReaderTestCS
 
 
         const string TEST_STR_SmallHierarchy = 
-            @"[
+            @"[;comment 1
                 :pre/asdf 
                     [1 2 3 ""Asdfsaf"" 5 6 7 #{""a"" 1 2 [7 8 9], nil} {[1 2] ,#{78 12} nil 1 
-        ,, ""asdfa"" 4 :foo nil} foo]]";
+                    {#_ 1 nil :value} 3 ;comment 2
+                    
+        ,, ""asdfa"" 4 :foo nil} foo #inst ""1999-03-11T23:15:36.11Z""]]";
     }
 }
