@@ -55,5 +55,12 @@ namespace EDNReaderTestCS
             }
         }
 
+
+        public static void Assert(bool assertion)
+        {
+            if(!assertion)
+                throw new Exception("Assert failed.");
+        }
+
     }
 }
