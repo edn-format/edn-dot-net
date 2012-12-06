@@ -3,12 +3,17 @@
 module PrintHandlers = 
     open EDNTypes
     open System.IO
+    open System.Collections
     open System.Collections.Generic
-    open System.Numerics;
+    open System.Numerics
 
     type public BasePrintHandler() = 
+        abstract member handleObject: System.Object * Stream -> unit
+        default this.handleObject(obj, stream) = (this :> IPrintHandler).handleObject(obj, stream)
+        abstract member handleEnumerable: IEnumerable * Stream -> unit
+        default this.handleEnumerable (enumerable, stream) = (this :> IPrintHandler).handleEnumerable(enumerable, stream)
         interface IPrintHandler with
-            member this.handleObject (obj, stream) =
+            override this.handleObject (obj, stream) =
                 match obj with
                 | null -> stream.Write(Utils.nullBytes, 0, Utils.nullBytes.Length)
 
@@ -34,9 +39,9 @@ module PrintHandlers =
                     Utils.WriteEDNToStream(str , stream)
                 
                 | :? KeyValuePair<System.Object, System.Object> as kvp -> 
-                    (this :> IPrintHandler).handleObject(kvp.Key, stream)
+                    this.handleObject(kvp.Key, stream)
                     stream.Write(Utils.spaceBytes, 0, Utils.spaceBytes.Length);
-                    (this :> IPrintHandler).handleObject(kvp.Value, stream)
+                    this.handleObject(kvp.Value, stream)
                 
                 | :? System.Guid as i ->
                     Utils.WriteEDNToStream(System.String.Format("#uuid \"{0}\"", i.ToString("D")), stream)
@@ -46,11 +51,11 @@ module PrintHandlers =
 
                 | _ -> raise (System.Exception("Cannot write edn for type " + obj.GetType().ToString()))
         
-            member this.handleEnumerable (enumerable, stream) =
+            override this.handleEnumerable (enumerable, stream) =
                 let enumerator = enumerable.GetEnumerator()
                 let mutable movedNext = enumerator.MoveNext()
                 while movedNext do
-                    (this :> IPrintHandler).handleObject (enumerator.Current, stream)
+                    this.handleObject (enumerator.Current, stream)
                     movedNext <- enumerator.MoveNext()
                     if movedNext then
                         stream.Write(Utils.spaceBytes, 0, Utils.spaceBytes.Length)
