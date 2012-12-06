@@ -13,18 +13,18 @@ module EDNReader =
     type public EDNReaderFuncs =
         static member parseString str = EDNReaderFuncs.parseString(str, defaultHandler)
 
-        static member parseString(str, (handler : BaseTypeHandler))= 
+        static member parseString(str, (handler : ITypeHandler))= 
             run (many1 parseValue) str |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map handler.handleValue
 
         static member parseStream stream = EDNReaderFuncs.parseStream(stream, defaultHandler)
 
-        static member parseStream(stream, (handler : BaseTypeHandler)) = 
+        static member parseStream(stream, (handler : ITypeHandler)) = 
             runParserOnStream parseValue () "ednStream" stream System.Text.Encoding.UTF8 |> getValueFromResult 
                 |> handler.handleValue
 
         static member parseFile fileName = EDNReaderFuncs.parseFile(fileName, defaultHandler)
 
-        static member parseFile(fileName, (handler : BaseTypeHandler)) = 
+        static member parseFile(fileName, (handler : ITypeHandler)) = 
             runParserOnFile (many1 parseValue) () fileName System.Text.Encoding.UTF8 |> getValueFromResult 
                 |> List.filter isNotCommentOrDiscard |> List.map handler.handleValue
 
