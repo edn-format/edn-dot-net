@@ -49,11 +49,13 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Script.fsx" />
     <Compile Include="EDNParserTypes.fs" />
     <Compile Include="EDNParser.fs" />
     <Compile Include="TypeHandlers.fs" />
     <Compile Include="EDNReader.fs" />
+    <Compile Include="PrintHandlers.fs" />
+    <Compile Include="EDNWriter.fs" />
+    <None Include="Script.fsx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

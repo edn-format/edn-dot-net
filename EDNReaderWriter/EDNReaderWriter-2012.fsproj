@@ -42,11 +42,11 @@
     <Compile Include="EDNParserTypes.fs" />
     <Compile Include="EDNParser.fs" />
     <Compile Include="TypeHandlers.fs" />
-    <None Include="Script.fsx" />
     <Compile Include="EDNReader.fs" />
-    <None Include="packages.config" />
     <Compile Include="PrintHandlers.fs" />
     <Compile Include="EDNWriter.fs" />
+    <None Include="Script.fsx" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FParsec">
