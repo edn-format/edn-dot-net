@@ -7,12 +7,11 @@ This library provides the following [EDN](https://github.com/edn-format/edn) sup
 * EDN Serialization: An extensible framework for EDN serialization and deserialization  
 
 # Why not use clojure.clr?
-Why not use the clojure.clr instead edn-dot-net ?
+Why not use the clojure.clr instead of edn-dot-net ?
   
 The ability to customize serialization and deserilization, e.g.:  
   * You might want your EDN ints to be int32 instead of BigInts  
   * Implement serialization/deserialization for you own custom types  
-
 
 
 # Deserialization
@@ -21,11 +20,17 @@ The ability to customize serialization and deserilization, e.g.:
 * readFile - doc  
 * readDirectory - doc  
 * readStream - doc  
+## Customizing reader
+### ITypeHandler
 
 # Serialization
 ## EDNReaderWriter.EDNWriter.EDNWriterFuncs  
 * writeString - doc  
 * writeStream - doc  
+
+## Customizing writing
+### IEDNPrintable
+### IPrintHandler
 
 # Parser  
 The parsing functionality is exposed if you want to work directly with the EDN syntax tree.
@@ -36,3 +41,10 @@ Here is where you will find conveniant funtions for generating syntax trees for 
 * parseFile - doc  
 * parseDirectory - doc  
 * parseStream - doc  
+
+
+#Examples
+## Serialization
+### Custom Serialization
+## Deserialization
+### Custom Deserialization
