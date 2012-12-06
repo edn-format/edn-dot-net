@@ -72,7 +72,7 @@ namespace EDNTypes
 
         public void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
         {
-            PrintUtils.WriteEDNToStream(":" + this.ToString(), stream);
+            Utils.WriteEDNToStream(":" + this.ToString(), stream);
         }
 
         #endregion

@@ -121,14 +121,14 @@ namespace EDNTypes
 
         public virtual string PrintEDN(IPrintHandler handler)
         {
-            return PrintUtils.WritePrintableToString(this, handler);
+            return Utils.WritePrintableToString(this, handler);
         }
 
         public virtual void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
         {
-            stream.Write(PrintUtils.openListBytes, 0, PrintUtils.openListBytes.Length);
+            stream.Write(Utils.openListBytes, 0, Utils.openListBytes.Length);
             handler.handleEnumerable(this, stream);
-            stream.Write(PrintUtils.closeListBytes, 0, PrintUtils.closeListBytes.Length);
+            stream.Write(Utils.closeListBytes, 0, Utils.closeListBytes.Length);
         }
 
         #endregion
@@ -143,14 +143,14 @@ namespace EDNTypes
 
         public override string PrintEDN(IPrintHandler handler)
         {
-            return PrintUtils.WritePrintableToString(this, handler);
+            return Utils.WritePrintableToString(this, handler);
         }
 
         public override void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
         {
-            stream.Write(PrintUtils.openVectorBytes, 0, PrintUtils.openVectorBytes.Length);
+            stream.Write(Utils.openVectorBytes, 0, Utils.openVectorBytes.Length);
             handler.handleEnumerable(this, stream);
-            stream.Write(PrintUtils.closeVectorBytes, 0, PrintUtils.closeVectorBytes.Length);
+            stream.Write(Utils.closeVectorBytes, 0, Utils.closeVectorBytes.Length);
         }
 
         public override bool Equals(object obj)

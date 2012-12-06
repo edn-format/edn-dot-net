@@ -106,14 +106,14 @@ namespace EDNTypes
 
         public string PrintEDN(IPrintHandler handler)
         {
-            return PrintUtils.WritePrintableToString(this, handler);
+            return Utils.WritePrintableToString(this, handler);
         }
 
         public void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
         {
-            stream.Write(PrintUtils.openSetBytes, 0, PrintUtils.openSetBytes.Length);
+            stream.Write(Utils.openSetBytes, 0, Utils.openSetBytes.Length);
             handler.handleEnumerable(this, stream);
-            stream.Write(PrintUtils.closeSetBytes, 0, PrintUtils.closeSetBytes.Length);
+            stream.Write(Utils.closeSetBytes, 0, Utils.closeSetBytes.Length);
         }
 
         #endregion
