@@ -38,6 +38,12 @@ module PrintHandlers =
                     stream.Write(Utils.spaceBytes, 0, Utils.spaceBytes.Length);
                     (this :> IPrintHandler).handleObject(kvp.Value, stream)
                 
+                | :? System.Guid as i ->
+                    Utils.WriteEDNToStream(System.String.Format("#uuid \"{0}\"", i.ToString("D")), stream)
+
+                | :? System.DateTime as i ->
+                    Utils.WriteEDNToStream(System.String.Format("#inst \"{0}\"", i.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")), stream)
+
                 | _ -> raise (System.Exception("Cannot write edn for type " + obj.GetType().ToString()))
         
             member this.handleEnumerable (enumerable, stream) =
