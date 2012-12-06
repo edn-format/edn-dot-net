@@ -17,11 +17,11 @@ namespace EDNReaderTestCS
     {
         static void Main(string[] args)
         {
-
+            TestParser();
             TestEquality();
             TestSampleCustomHandler();
-            TestParseString();
-            TestParseFile();
+            TestreadString();
+            TestreadFile();
             TestWriter();
             TestParseDirectory();
 
@@ -29,59 +29,59 @@ namespace EDNReaderTestCS
 
         public static void TestSampleCustomHandler()
         {
-            var r1 = EDNReader.EDNReaderFuncs.parseString("[1 2 {:a 3 1.2 \\c {1 2} 4}]", new SampleCustomHandler());
+            var r1 = EDNReader.EDNReaderFuncs.readString("[1 2 {:a 3 1.2 \\c {1 2} 4}]", new SampleCustomHandler());
         }
 
-        public static void TestParseString()
+        public static void TestreadString()
         {
-            var r1 = EDNReader.EDNReaderFuncs.parseString(TEST_STR_SmallHierarchy);
+            var r1 = EDNReader.EDNReaderFuncs.readString(TEST_STR_SmallHierarchy);
         }
 
         public static void TestEquality()
         {
-            var r1 = EDNReader.EDNReaderFuncs.parseString(TEST_STR_SmallHierarchy).First();
-            var r2 = EDNReader.EDNReaderFuncs.parseString(TEST_STR_SmallHierarchy).First();
+            var r1 = EDNReader.EDNReaderFuncs.readString(TEST_STR_SmallHierarchy).First();
+            var r2 = EDNReader.EDNReaderFuncs.readString(TEST_STR_SmallHierarchy).First();
             Funcs.Assert(r1.Equals(r2));
 
-            r1 = EDNReader.EDNReaderFuncs.parseString("[[nil 1 nil]]").First();
-            r2 = EDNReader.EDNReaderFuncs.parseString("[[1 nil 1]]").First();
+            r1 = EDNReader.EDNReaderFuncs.readString("[[nil 1 nil]]").First();
+            r2 = EDNReader.EDNReaderFuncs.readString("[[1 nil 1]]").First();
             Funcs.Assert(!r1.Equals(r2));
 
-            r1 = EDNReader.EDNReaderFuncs.parseString("[[nil 1 nil]]").First();
-            r2 = EDNReader.EDNReaderFuncs.parseString("[[1 nil]]").First();
+            r1 = EDNReader.EDNReaderFuncs.readString("[[nil 1 nil]]").First();
+            r2 = EDNReader.EDNReaderFuncs.readString("[[1 nil]]").First();
             Funcs.Assert(!r1.Equals(r2));
 
-            r1 = EDNReader.EDNReaderFuncs.parseString("[{nil 1 1 nil}]").First();
-            r2 = EDNReader.EDNReaderFuncs.parseString("[{nil 1 1 2}]").First();
+            r1 = EDNReader.EDNReaderFuncs.readString("[{nil 1 1 nil}]").First();
+            r2 = EDNReader.EDNReaderFuncs.readString("[{nil 1 1 2}]").First();
             Funcs.Assert(!r1.Equals(r2));
 
-            r1 = EDNReader.EDNReaderFuncs.parseString("[(nil 1 1 2)]").First();
-            r2 = EDNReader.EDNReaderFuncs.parseString("[(4 1 1 nil)]").First();
+            r1 = EDNReader.EDNReaderFuncs.readString("[(nil 1 1 2)]").First();
+            r2 = EDNReader.EDNReaderFuncs.readString("[(4 1 1 nil)]").First();
             Funcs.Assert(!r1.Equals(r2));
 
-            r1 = EDNReader.EDNReaderFuncs.parseString("[#{nil 1 2 3}]").First();
-            r2 = EDNReader.EDNReaderFuncs.parseString("[#{nil 1 2 3}]").First();
+            r1 = EDNReader.EDNReaderFuncs.readString("[#{nil 1 2 3}]").First();
+            r2 = EDNReader.EDNReaderFuncs.readString("[#{nil 1 2 3}]").First();
             Funcs.Assert(r1.Equals(r2));
 
-            r1 = EDNReader.EDNReaderFuncs.parseString("[#{nil 1 2 3}]").First();
-            r2 = EDNReader.EDNReaderFuncs.parseString("[#{5 nil 1 6}]").First();
+            r1 = EDNReader.EDNReaderFuncs.readString("[#{nil 1 2 3}]").First();
+            r2 = EDNReader.EDNReaderFuncs.readString("[#{5 nil 1 6}]").First();
             Funcs.Assert(!r1.Equals(r2));
 
-            r1 = EDNReader.EDNReaderFuncs.parseFile("..\\..\\..\\TestData\\hierarchical.edn");
+            r1 = EDNReader.EDNReaderFuncs.readFile("..\\..\\..\\TestData\\hierarchical.edn");
 
-            r2 = EDNReader.EDNReaderFuncs.parseFile("..\\..\\..\\TestData\\hierarchical.edn");
+            r2 = EDNReader.EDNReaderFuncs.readFile("..\\..\\..\\TestData\\hierarchical.edn");
 
             Funcs.Assert(r1.Equals(r2));
         }
 
-        public static void TestParseFile()
+        public static void TestreadFile()
         {
-            var r1 = EDNReader.EDNReaderFuncs.parseFile("..\\..\\..\\TestData\\hierarchical.edn");
+            var r1 = EDNReader.EDNReaderFuncs.readFile("..\\..\\..\\TestData\\hierarchical.edn");
         }
 
         public static void TestWriter()
         {
-            var r1 = EDNReader.EDNReaderFuncs.parseString(TEST_STR_SmallHierarchy);
+            var r1 = EDNReader.EDNReaderFuncs.readString(TEST_STR_SmallHierarchy);
 
             foreach (var ednObj in r1)
             {
@@ -106,10 +106,15 @@ namespace EDNReaderTestCS
         {
             //File parsting test
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            var rDir = EDNReader.EDNReaderFuncs.parseDirectory("..\\..\\..\\TestData\\hierarchy-noisy");
+            var rDir = EDNReader.EDNReaderFuncs.readDirectory("..\\..\\..\\TestData\\hierarchy-noisy");
             sw.Stop();
 
             Console.WriteLine(String.Format("Elapsed MS: {0}", sw.ElapsedMilliseconds));
+        }
+
+        public static void TestParser()
+        {
+            var ast = EDNParser.EDNParserFuncs.parseFile("..\\..\\..\\TestData\\hierarchical.edn");
         }
 
 

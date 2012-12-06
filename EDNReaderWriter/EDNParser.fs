@@ -1,6 +1,7 @@
 ﻿
 namespace EDNReaderWriter
 module EDNParser =
+    open System.IO
     open System.Text.RegularExpressions
     open System.Numerics
     open FParsec
@@ -188,3 +189,20 @@ module EDNParser =
         match result with
         | Success (r,_,_) -> r
         | Failure (r,_,_) -> raise (System.Exception (r))
+
+
+    type public EDNParserFuncs =
+        static member parseString str = 
+            run (many1 parseValue) str |> getValueFromResult 
+
+        static member parseStream stream = 
+            runParserOnStream parseValue () "ednStream" stream System.Text.Encoding.UTF8 |> getValueFromResult
+
+        static member parseFile fileName = 
+            runParserOnFile (many1 parseValue) () fileName System.Text.Encoding.UTF8 |> getValueFromResult 
+
+        static member parseDirectory dir  = 
+            let searchPattern = @"*.edn"
+            let testFiles = Directory.GetFiles(dir, searchPattern, SearchOption.AllDirectories)
+            let results = [for f in testFiles do yield! EDNParserFuncs.parseFile f]
+            results

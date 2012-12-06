@@ -11,39 +11,38 @@ module EDNReader =
     let defaultHandler = new EDNReaderWriter.TypeHandlers.BaseTypeHandler()
 
     type public EDNReaderFuncs =
-        static member parseString str = EDNReaderFuncs.parseString(str, defaultHandler)
+        static member readString str = EDNReaderFuncs.readString(str, defaultHandler)
 
-        static member parseString(str, (handler : ITypeHandler))= 
-            run (many1 parseValue) str |> getValueFromResult |> List.filter isNotCommentOrDiscard |> List.map handler.handleValue
+        static member readString(str, (handler : ITypeHandler))= 
+            EDNParserFuncs.parseString str |> List.filter isNotCommentOrDiscard |> List.map handler.handleValue
 
-        static member parseStream stream = EDNReaderFuncs.parseStream(stream, defaultHandler)
+        static member readStream stream = EDNReaderFuncs.readStream(stream, defaultHandler)
 
-        static member parseStream(stream, (handler : ITypeHandler)) = 
-            runParserOnStream parseValue () "ednStream" stream System.Text.Encoding.UTF8 |> getValueFromResult 
-                |> handler.handleValue
+        static member readStream(stream, (handler : ITypeHandler)) = 
+            EDNParserFuncs.parseStream stream |> handler.handleValue
 
-        static member parseFile fileName = EDNReaderFuncs.parseFile(fileName, defaultHandler)
+        static member readFile fileName = EDNReaderFuncs.readFile(fileName, defaultHandler)
 
-        static member parseFile(fileName, (handler : ITypeHandler)) = 
-            runParserOnFile (many1 parseValue) () fileName System.Text.Encoding.UTF8 |> getValueFromResult 
+        static member readFile(fileName, (handler : ITypeHandler)) = 
+            EDNParserFuncs.parseFile fileName
                 |> List.filter isNotCommentOrDiscard |> List.map handler.handleValue
 
-        static member parseDirectory dir = EDNReaderFuncs.parseDirectory(dir, defaultHandler)
+        static member readDirectory dir = EDNReaderFuncs.readDirectory(dir, defaultHandler)
 
-        static member parseDirectory(dir, (handler : BaseTypeHandler))  = 
+        static member readDirectory(dir, (handler : BaseTypeHandler))  = 
             let searchPattern = @"*.edn"
             let testFiles = Directory.GetFiles(dir, searchPattern, SearchOption.AllDirectories)
-            let results = [for f in testFiles do yield! EDNReaderFuncs.parseFile(f, handler)]
+            let results = [for f in testFiles do yield! EDNReaderFuncs.readFile(f, handler)]
             results
 
-        static member tryParseDirectory dir = EDNReaderFuncs.tryParseDirectory(dir, defaultHandler) 
+        static member tryReadDirectory dir = EDNReaderFuncs.tryReadDirectory(dir, defaultHandler) 
 
-        static member tryParseDirectory(dir, (handler : BaseTypeHandler))  = 
+        static member tryReadDirectory(dir, (handler : BaseTypeHandler))  = 
             let searchPattern = @"*.edn"
             let testFiles = Directory.GetFiles(dir, searchPattern, SearchOption.AllDirectories)
             let results = [for f in testFiles do yield!
                                                     try
-                                                        EDNReaderFuncs.parseFile(f, handler)
+                                                        EDNReaderFuncs.readFile(f, handler)
                                                     with
                                                         | exn -> [printf "error parsing file %s \n" f] ]
             results
