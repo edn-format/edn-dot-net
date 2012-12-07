@@ -24,7 +24,7 @@ namespace EDNReaderTestCS
             TestreadFile();
             TestWriter();
             TestParseDirectory();
-
+            TestCustomHandler();
         }
 
         public static void TestSampleCustomHandler()
@@ -37,6 +37,13 @@ namespace EDNReaderTestCS
             var r1 = EDNReader.EDNReaderFuncs.readString(TEST_STR_SmallHierarchy);
         }
 
+        public static void TestCustomHandler()
+        {
+            SampleCustomHandler customHandler = new SampleCustomHandler();
+            SampleCustomPrinter customPrinter = new SampleCustomPrinter();
+            var r1 = EDNReader.EDNReaderFuncs.readString(TEST_STR_CustomTypeTimezone, customHandler).First();
+            string printedObj = EDNWriter.EDNWriterFuncs.writeString(r1, customPrinter);
+        }
         public static void TestEquality()
         {
             var r1 = EDNReader.EDNReaderFuncs.readString(TEST_STR_SmallHierarchy).First();
@@ -125,5 +132,11 @@ namespace EDNReaderTestCS
                     {#_ 1 nil :value} 3 ;comment 2
                     
         ,, ""asdfa"" 4 :foo nil} foo #inst ""1999-03-11T23:15:36.11Z""]]";
+
+        /// <summary>
+        /// A sample type (System.TimeZoneInfo) to test the custom handler.
+        /// </summary>
+        const string TEST_STR_CustomTypeTimezone =
+            "#sample-custom-type/timezone {:Id \"Custom Time Zone\" :BaseUtcOffset \"02:00:00\" :DisplayName \"(UTC+02:00) Custom Time Zone\" :StandardDisplayName \"Custom Time Zone\"}";
     }
 }

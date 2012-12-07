@@ -49,6 +49,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleCustomHandler.cs" />
+    <Compile Include="SampleCustomPrinter.cs" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(SolutionName)'=='edn-dot-net-2012'">
