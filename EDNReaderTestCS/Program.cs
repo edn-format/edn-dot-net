@@ -40,9 +40,9 @@ namespace EDNReaderTestCS
         public static void TestCustomHandler()
         {
             SampleCustomHandler customHandler = new SampleCustomHandler();
-            SampleCustomPrinter customPrinter = new SampleCustomPrinter();
+            SampleCustomWriter customWriter = new SampleCustomWriter();
             var r1 = EDNReader.EDNReaderFuncs.readString(TEST_STR_CustomTypeTimezone, customHandler).First();
-            string printedObj = EDNWriter.EDNWriterFuncs.writeString(r1, customPrinter);
+            string printedObj = EDNWriter.EDNWriterFuncs.writeString(r1, customWriter);
         }
         public static void TestEquality()
         {

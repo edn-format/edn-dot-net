@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EDNTypes
 {
-    public class EDNSymbol : IEDNSymbol, IEDNPrintable
+    public class EDNSymbol : IEDNSymbol, IEDNWritable
     {
         private string prefix;
         private string name;
@@ -65,12 +65,12 @@ namespace EDNTypes
 
         #region IEDNPrintable Members
 
-        public string PrintEDN(IPrintHandler handler)
+        public string WriteEDN(IWriteHandler handler)
         {
             return Utils.getSymbolString(prefix, name);
         }
 
-        public void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
+        public void WriteEDN(System.IO.Stream stream, IWriteHandler handler)
         {
             Utils.WriteEDNToStream(this.ToString(), stream);
         }

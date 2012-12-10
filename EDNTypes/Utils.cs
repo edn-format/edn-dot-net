@@ -44,11 +44,11 @@ namespace EDNTypes
             stream.Write(bytes, 0, bytes.Length);
         }
 
-        public static string WritePrintableToString(IEDNPrintable printable, IPrintHandler handler)
+        public static string WritePrintableToString(IEDNWritable printable, IWriteHandler handler)
         {
             using (MemoryStream ms = new MemoryStream())
             {
-                printable.PrintEDN(ms, handler);
+                printable.WriteEDN(ms, handler);
                 ms.Position = 0;
                 var sr = new StreamReader(ms);
                 return sr.ReadToEnd();

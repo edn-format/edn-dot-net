@@ -31,7 +31,7 @@ module test =
 
     let testCustomHandler =
         let r1 = EDNReaderFuncs.readString(TEST_STR_CustomTypeTimezone, new SampleCustomHandler()).Head
-        EDNWriterFuncs.writeString(r1, new SampleCustomPrinter())
+        EDNWriterFuncs.writeString(r1, new SampleCustomWriter())
 
     let testEquality =
         let mutable r1 = EDNReaderFuncs.readString(TEST_STR_SmallHierarchy).Head

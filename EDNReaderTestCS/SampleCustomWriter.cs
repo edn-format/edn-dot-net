@@ -8,10 +8,10 @@ using EDNReaderWriter;
 namespace EDNReaderTestCS
 {
     /// <summary>
-    /// Sample printer/writer handler. Has the following custom behavior:
+    /// Sample Writer/writer handler. Has the following custom behavior:
     /// - Handles System.TimeZoneInfo via a special tag. See the SampleCustomHandler for reading this type. 
     /// </summary>
-    public class SampleCustomPrinter : PrintHandlers.BasePrintHandler
+    public class SampleCustomWriter : WriteHandlers.BaseWriteHandler
     {
         private static readonly Byte[] tagBytes = Encoding.UTF8.GetBytes("#sample-custom-type/timezone ");
         private static readonly Byte[] keyIdBytes = Encoding.UTF8.GetBytes(":Id");
@@ -22,7 +22,7 @@ namespace EDNReaderTestCS
         public override void handleObject(object obj, System.IO.Stream stream)
         {
             // If obj is a type that I want to handle, in this case System.TimeZoneInfo, handle it here.
-            // Otherwise run the default BasePrinterHandler
+            // Otherwise run the default BaseWriterHandler
             if (obj.GetType() == typeof(System.TimeZoneInfo))
             {
                 System.TimeZoneInfo tz = (System.TimeZoneInfo)obj;

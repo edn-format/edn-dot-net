@@ -1,15 +1,15 @@
 ﻿namespace EDNReaderWriter
 
-module PrintHandlers = 
+module WriteHandlers = 
     open EDNTypes
     open System.IO
     open System.Collections
     open System.Collections.Generic
     open System.Numerics
 
-    type public BasePrintHandler() = 
+    type public BaseWriteHandler() = 
 
-        interface IPrintHandler with
+        interface IWriteHandler with
             override this.handleObject (obj, stream) = this.handleObject (obj, stream)
             override this.handleEnumerable (enumerable, stream) = this.handleEnumerable (enumerable, stream)
 
@@ -18,7 +18,7 @@ module PrintHandlers =
             match obj with
             | null -> stream.Write(Utils.nullBytes, 0, Utils.nullBytes.Length)
 
-            | :? IEDNPrintable as printable -> printable.PrintEDN(stream, this)
+            | :? IEDNWritable as writeable -> writeable.WriteEDN(stream, this)
                 
             | :? System.Int32 | :? System.Int64 | :? System.Double
             | :? System.Single | :? System.Decimal | :? BigInteger as i -> Utils.WriteEDNToStream(i.ToString(), stream)

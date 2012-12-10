@@ -7,7 +7,7 @@ using System.Collections;
 
 namespace EDNTypes
 {
-    public interface IPrintHandler
+    public interface IWriteHandler
     {
         void handleObject(object obj, Stream stream);
 

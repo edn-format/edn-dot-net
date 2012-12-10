@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EDNTypes
 {
-    public class EDNSet : IEnumerable<object>, IEDNEnumerable, IEDNPrintable
+    public class EDNSet : IEnumerable<object>, IEDNEnumerable, IEDNWritable
     {
         private HashSet<object> ednHashSet = null;
 
@@ -104,12 +104,12 @@ namespace EDNTypes
 
         #region IEDNPrintable Members
 
-        public string PrintEDN(IPrintHandler handler)
+        public string WriteEDN(IWriteHandler handler)
         {
             return Utils.WritePrintableToString(this, handler);
         }
 
-        public void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
+        public void WriteEDN(System.IO.Stream stream, IWriteHandler handler)
         {
             stream.Write(Utils.openSetBytes, 0, Utils.openSetBytes.Length);
             handler.handleEnumerable(this, stream);

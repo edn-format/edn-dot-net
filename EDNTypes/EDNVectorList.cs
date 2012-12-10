@@ -8,7 +8,7 @@ namespace EDNTypes
 {
 
 
-    public class EDNList : IEnumerable<object>, IEDNEnumerable, IEDNPrintable
+    public class EDNList : IEnumerable<object>, IEDNEnumerable, IEDNWritable
     {
         private List<object> ednList;
 
@@ -119,12 +119,12 @@ namespace EDNTypes
 
         #region IEDNPrintable Members
 
-        public virtual string PrintEDN(IPrintHandler handler)
+        public virtual string WriteEDN(IWriteHandler handler)
         {
             return Utils.WritePrintableToString(this, handler);
         }
 
-        public virtual void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
+        public virtual void WriteEDN(System.IO.Stream stream, IWriteHandler handler)
         {
             stream.Write(Utils.openListBytes, 0, Utils.openListBytes.Length);
             handler.handleEnumerable(this, stream);
@@ -141,12 +141,12 @@ namespace EDNTypes
         {
         }
 
-        public override string PrintEDN(IPrintHandler handler)
+        public override string WriteEDN(IWriteHandler handler)
         {
             return Utils.WritePrintableToString(this, handler);
         }
 
-        public override void PrintEDN(System.IO.Stream stream, IPrintHandler handler)
+        public override void WriteEDN(System.IO.Stream stream, IWriteHandler handler)
         {
             stream.Write(Utils.openVectorBytes, 0, Utils.openVectorBytes.Length);
             handler.handleEnumerable(this, stream);

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EDNTypes
 {
-    public interface IEDNPrintable
+    public interface IEDNWritable
     {
         /// <summary>
         /// Serializes the object graph to an EDN string. WARNING: should not be used for large graphs as single large strings
@@ -14,12 +14,12 @@ namespace EDNTypes
         /// be forced to collect "the world" more often. Consider using the PrintEDN(stream) method.
         /// </summary>
         /// <returns>The EDN string</returns>
-        string PrintEDN(IPrintHandler handler);
+        string WriteEDN(IWriteHandler handler);
 
         /// <summary>
         /// Serializes the object graph as an EDN string to the stream.
         /// </summary>
         /// <param name="stream"></param>
-        void PrintEDN(Stream stream, IPrintHandler handler);
+        void WriteEDN(Stream stream, IWriteHandler handler);
     }
 }
