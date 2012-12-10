@@ -40,8 +40,8 @@
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets" Condition=" Exists('$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets')" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <ItemGroup>
-    <Compile Include="Program.fs" />
     <None Include="packages.config" />
+    <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FParsec">
@@ -57,6 +57,11 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <ProjectReference Include="..\EDNReaderTestCS\EDNReaderTestCS.csproj">
+      <Name>EDNReaderTestCS</Name>
+      <Project>{8a0884c8-d2d8-48fa-b936-a91ec3f39c0f}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\EDNReaderWriter\EDNReaderWriter-2012.fsproj">
       <Name>EDNReaderWriter-2012</Name>
       <Project>{8a6173db-bc8c-42dc-ba02-72a9726212f7}</Project>
