@@ -10,7 +10,9 @@ using EDNReaderWriter;
 namespace EDNReaderTestCS
 {
     /// <summary>
-    /// Sample EDN reader handler. Converts EDN maps to Dictionary<object, object> instead of EDNMap.
+    /// Sample EDN reader handler. Has the following custom behavior
+    /// - Converts EDN maps to Dictionary<object, object> instead of EDNMap.
+    /// - Handles System.TimeZoneInfo via a special tag. See the SampleCustomPrinter for writing of the type. 
     /// </summary>
     public class SampleCustomHandler : TypeHandlers.BaseTypeHandler
     {
