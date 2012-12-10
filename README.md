@@ -30,25 +30,23 @@ first/next object is returned.
 
 ### Default type handler
 The default type handler is consistent with the equality rules of EDN.  For collections it uses types which have
-EDN equality symantics. 
+EDN equality symantics. Also, EDNTypes.EDNMap supports null keys unlike System.Collections.Generic.Dictionary and System.Collections.Hashtable
 
-EDN Type	-> .NET Type
-----------------------------------
-nil			-> null
-integer		-> Int64 or System.Numerics.BigInteger (if too large to fit in Int64)
-string		-> string
-bool		-> bool
-float		-> double
-list		-> EDNTypes.EDNList
-vector		-> EDNTypes.EDNVector
-set			-> EDNTypes.EDNSet
-list		-> EDNTypes.EDNMap
-symbol		-> EDNTypes.EDNVector
-keyword		-> EDNTypes.EDNSet
-inst		-> DateTime
-uuid		-> System.Guid 
+The default type handler has the following EDN to .NET type mappings:  
+* nil       : null  
+* integer   : Int64 or System.Numerics.BigInteger (if too large to fit in Int64)  
+* string	: string  
+* bool		: bool  
+* float		: double  
+* list		: EDNTypes.EDNList   
+* vector    : EDNTypes.EDNVector  
+* set       : EDNTypes.EDNSet  
+* list		: EDNTypes.EDNMap  
+* symbol	: EDNTypes.EDNVector  
+* keyword	: EDNTypes.EDNSet  
+* inst		: DateTime  
+* uuid		: System.Guid  
 
-  
 ## Customizing reader
 ### ITypeHandler
 If you want to customize reading you can implement TypeHandlers.ITypeHandler or derive from the default type handler: 
