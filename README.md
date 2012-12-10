@@ -55,22 +55,22 @@ TypeHandlers.BaseTypeHandler. An example of this can be found in the EDNReaderTe
 # Serialization
 ## EDNReaderWriter.EDNWriter.EDNWriterFuncs  
 ### overview
-The writer functions below take an object graph and convert it to EDN character data. Each function has two arities: one which uses the default print handler 
-and one which allows you to pass in your own custom print handler. A sample custom print handler can be found in the EDNReaderTestCS project (SampleCustomPrinter).
+The writer functions below take an object graph and convert it to EDN character data. Each function has two arities: one which uses the default write handler 
+and one which allows you to pass in your own custom write handler. A sample custom write handler can be found in the EDNReaderTestCS project (SampleCustomWriter).
 
 * writeString - Takes an object graph and returns a string of EDN data. 
 * writeStream - Takes an object graph and writes EDN character data to a stream.
 
-### Default print handler
-The default print handler is the inverse of the default type handler in the reader (see above)
+### Default write handler
+The default write handler is the inverse of the default type handler in the reader (see above)
 
 ## Customizing writing
-### IEDNPrintable
-If you have your own custom types, you can derive from IEDNPrintable and implement the two PrintEDN functions 
+### IEDNWritable
+If you have your own custom types, you can derive from IEDNWritable and implement the two WriteEDN functions 
 
-### IPrintHandler
-If you want to customize printing for types that cannot implement IEDNPrintable, you can implement IPrintHandler or derive 
-from the default print handler: PrintHandlers.BasePrintHandler. An example of this can be found in the EDNReaderTestCS project (SampleCustomPrinter).
+### IWriteHandler
+If you want to customize writing for types that cannot implement IEDNWritable, you can implement IWriteHandler or derive 
+from the default write handler: WriteHandlers.BaseWriteHandler. An example of this can be found in the EDNReaderTestCS project (SampleCustomWriter).
 
 # Parser  
 The parsing functionality is exposed if you want to work directly with the EDN syntax tree.
