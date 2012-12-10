@@ -7,6 +7,10 @@ using EDNReaderWriter;
 
 namespace EDNReaderTestCS
 {
+    /// <summary>
+    /// Sample printer/writer handler. Has the following custom behavior:
+    /// - Handles System.TimeZoneInfo via a special tag. See the SampleCustomHandler for reading this type. 
+    /// </summary>
     public class SampleCustomPrinter : PrintHandlers.BasePrintHandler
     {
         private static readonly Byte[] tagBytes = Encoding.UTF8.GetBytes("#sample-custom-type/timezone ");
