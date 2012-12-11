@@ -85,3 +85,8 @@ Here is where you will find conveniant funtions for generating syntax trees for 
 
 # Examples
 Examples for CSharp can be found in the EDNReaderTestCS projects. F# examples can ve found in thge EDNReaderTest project.
+
+# License
+Copyright (c) Thortech Solutions, LLC. 
+
+Licensed under the EPL. (See the file epl.html)
