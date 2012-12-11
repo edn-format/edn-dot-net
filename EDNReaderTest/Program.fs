@@ -87,3 +87,12 @@ module test =
         let rDir = EDNReaderFuncs.readDirectory("..\\..\\..\\TestData\\hierarchy-noisy")
         sw.Stop()
         printf "Elapsed ms: %i" sw.ElapsedMilliseconds
+
+    [<EntryPoint>]
+    let main(args : string[]) =
+        ignore testReadString
+        ignore testCustomHandler
+        ignore testReadFile
+        ignore testWriter
+        ignore testParseDirectory
+        0

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{3e4b81c4-0b07-4b35-8337-268050f70894}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>Library1</RootNamespace>
     <AssemblyName>EDNReaderTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
