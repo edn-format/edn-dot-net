@@ -53,7 +53,7 @@
     <Compile Include="EDNParser.fs" />
     <Compile Include="TypeHandlers.fs" />
     <Compile Include="EDNReader.fs" />
-    <Compile Include="PrintHandlers.fs" />
+    <Compile Include="WriteHandlers.fs" />
     <Compile Include="EDNWriter.fs" />
     <None Include="Script.fsx" />
     <None Include="packages.config" />
