@@ -15,7 +15,9 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="EDNReader.dll" target="lib\net40\EDNReader.dll" />
+        <file src="EDNReaderWriter.dll" target="lib\net40\EDNReaderWriter.dll" />
         <file src="EDNTypes.dll" target="lib\net40\EDNTypes.dll" />
+		<file src="EDNReaderTest.exe" target="lib\net40\EDNReaderTest.exe" />
+		<file src="EDNReaderTestCS.exe" target="lib\net40\EDNReaderTestCS.exe" />
     </files>
 </package>
