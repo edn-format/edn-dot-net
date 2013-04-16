@@ -37,6 +37,7 @@ namespace EDNReaderTestCS
             TestWriter();
             TestParseDirectory();
             TestCustomHandler();
+            TestCollections();
         }
 
         public static void TestSampleCustomHandler()
@@ -96,6 +97,12 @@ namespace EDNReaderTestCS
         public static void TestreadFile()
         {
             var r1 = EDNReader.EDNReaderFuncs.readFile("..\\..\\..\\TestData\\hierarchical.edn");
+
+            string s = EDNWriter.EDNWriterFuncs.writeString(r1.First());
+
+            var r2 = EDNReader.EDNReaderFuncs.readString(s);
+
+            Funcs.Assert(r1.Equals(r2));
         }
 
         public static void TestWriter()
@@ -118,7 +125,6 @@ namespace EDNReaderTestCS
                     Console.WriteLine("Print Stream: {0}", stringFromStream);
                 }
             }
-            
         }
 
         public static void TestParseDirectory()
@@ -129,11 +135,85 @@ namespace EDNReaderTestCS
             sw.Stop();
 
             Console.WriteLine(String.Format("Elapsed MS: {0}", sw.ElapsedMilliseconds));
+
+            string writtenFirst = EDNWriter.EDNWriterFuncs.writeString(rDir.First());
+
+            var readAgain = EDNReader.EDNReaderFuncs.readString(writtenFirst);
+
+            Funcs.Assert(readAgain.First().Equals(rDir.First()));
         }
 
         public static void TestParser()
         {
             var ast = EDNParser.EDNParserFuncs.parseFile("..\\..\\..\\TestData\\hierarchical.edn");
+        }
+
+        public static void TestCollections()
+        {
+            var testNetCollections = new List<IDictionary<string, SortedSet<int>>>()
+            {
+                new Dictionary<string, SortedSet<int>>()
+                {
+                    {"key1", new SortedSet<int>() { 1, 2, 3 }}, 
+                    {"key2", new SortedSet<int>() { 4, 5, 6 }}, 
+                },
+
+                new Dictionary<string, SortedSet<int>>()
+                {
+                    {"key3", new SortedSet<int>() { 1, 2, 3 }}, 
+                    {"key4", new SortedSet<int>() { 4, 5, 6 }}, 
+                }
+            };
+
+
+            string s = EDNWriter.EDNWriterFuncs.writeString(testNetCollections);
+
+            var testNetRet = EDNReader.EDNReaderFuncs.readString(s);
+
+            var firstDict = (IDictionary<object, object>)((IEnumerable<object>)testNetRet.First()).First();
+
+            foreach (var kvp in firstDict)
+            {
+                Funcs.Assert(kvp.Value is EDNSet);
+            }
+
+            Funcs.Assert(firstDict.Contains(new KeyValuePair<object, object>("key1", new EDNSet(new object[] {1L, 2L, 3L }))));
+            Funcs.Assert(firstDict.Count() == 2);
+
+            var testMap = new EDNMap(new List<object>()
+                {
+                    null, new SortedSet<int>() { 1, 2, 3 },
+                    "key6", new SortedSet<int>() { 4, 5, 6 },
+                    "key7", 1
+                });
+
+            foreach (var kvp in testMap)
+            {
+                Funcs.Assert(kvp.Value != null && kvp.Value != kvp.Key);
+            }
+
+            Funcs.Assert(testMap[null] is SortedSet<int>);
+            Funcs.Assert(testMap.Count() == 3);
+            Funcs.Assert(testMap.Where(kvp => (string)kvp.Key == "key7").Count() == 1);
+            Funcs.Assert(testMap.Select(kvp => (string)kvp.Key == "key7").First() == false);
+            Funcs.Assert(testMap.ContainsKey(null));
+            Funcs.Assert(testMap.ContainsKey("key6"));
+            Funcs.Assert(testMap.ContainsKey("missingkey") == false);
+
+            Funcs.Assert(testMap.Keys.Count() == testMap.Values.Count());
+            Funcs.Assert(testMap.Values.Count() == 3);
+            Funcs.Assert(testMap.Values.Contains(1));
+            Funcs.Assert(testMap.Values.Contains(999) == false);
+            Funcs.Assert(testMap.Keys.Contains(null));
+            Funcs.Assert(testMap.Keys.Contains("key6"));
+
+            Funcs.Assert(testMap.ToList().Count(kvp => kvp.Key == null) == 1);
+
+            //test array
+            s = EDNWriter.EDNWriterFuncs.writeString(testNetCollections.ToArray());
+            testNetRet = EDNReader.EDNReaderFuncs.readString(s);
+
+            Funcs.Assert(testNetRet.First() is EDNVector);
         }
 
 

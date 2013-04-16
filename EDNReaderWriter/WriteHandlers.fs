@@ -43,26 +43,55 @@ module WriteHandlers =
                     | '\r' -> "\\return"
                     | '\n' -> "\\newline"
                     | ' ' -> "\\space"
-                    | _ -> i.ToString()
+                    | _ -> "\\" + i.ToString()
                 Utils.WriteEDNToStream(str, stream)
                 
             | :? System.Boolean as i ->
                 let str = if i then "true" else "false"
                 Utils.WriteEDNToStream(str , stream)
-                
-            | :? KeyValuePair<System.Object, System.Object> as kvp ->
-                this.handleObject(kvp.Key, stream)
-                stream.Write(Utils.spaceBytes, 0, Utils.spaceBytes.Length);
-                this.handleObject(kvp.Value, stream)
-                
+
             | :? System.Guid as i ->
                 Utils.WriteEDNToStream(System.String.Format("#uuid \"{0}\"", i.ToString("D")), stream)
 
             | :? System.DateTime as i ->
                 Utils.WriteEDNToStream(System.String.Format("#inst \"{0}\"", i.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")), stream)
 
-            | _ -> raise (System.Exception("Cannot write edn for type " + obj.GetType().ToString()))
-        
+            | :? System.Collections.IDictionary as dict ->
+                stream.Write(Utils.openMapBytes, 0, Utils.openMapBytes.Length)
+                this.handleEnumerable (dict, stream)
+                stream.Write(Utils.closeMapBytes, 0, Utils.closeMapBytes.Length)
+
+            | :? System.Array as array ->
+                stream.Write(Utils.openVectorBytes, 0, Utils.openVectorBytes.Length)
+                this.handleEnumerable (array, stream)
+                stream.Write(Utils.closeVectorBytes, 0, Utils.closeVectorBytes.Length)
+
+            | :? System.Collections.IList as lst ->
+                stream.Write(Utils.openListBytes, 0, Utils.openListBytes.Length)
+                this.handleEnumerable (lst, stream)
+                stream.Write(Utils.closeListBytes, 0, Utils.closeListBytes.Length)
+
+            | _ as obj ->
+                let typ = obj.GetType()
+                if typ.IsGenericType then
+                    let genericType = typ.GetGenericTypeDefinition()
+                    // Need to come up with faster alternative to this reflection
+                    if genericType.Name = "KeyValuePair`2" then
+                        let key = typ.GetProperty("Key").GetValue(obj, null)
+                        let value = typ.GetProperty("Value").GetValue(obj, null)
+                        this.handleObject(key, stream)
+                        stream.Write(Utils.spaceBytes, 0, Utils.spaceBytes.Length);
+                        this.handleObject(value, stream)
+                    elif Seq.exists (fun (t : System.Type) -> t.Name = "ISet`1") (genericType.GetInterfaces() :> seq<System.Type>)   then
+                        let set = obj :?> System.Collections.IEnumerable
+                        stream.Write(Utils.openSetBytes, 0, Utils.openSetBytes.Length)
+                        this.handleEnumerable (set, stream)
+                        stream.Write(Utils.closeSetBytes, 0, Utils.closeSetBytes.Length)
+                    else
+                        raise (System.Exception("Cannot write edn for type " + obj.GetType().ToString()))
+                else
+                    raise (System.Exception("Cannot write edn for type " + obj.GetType().ToString()))
+                    
         abstract member handleEnumerable: IEnumerable * Stream -> unit
         default this.handleEnumerable (enumerable, stream) =
             let enumerator = enumerable.GetEnumerator()

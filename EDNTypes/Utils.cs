@@ -40,15 +40,42 @@ namespace EDNTypes
 
         public static readonly Byte[] nullBytes = Encoding.UTF8.GetBytes("nil");
 
-        public static string ToLiteral(string input)
+        //Modified from Microsoft.CSharp.CSharpCodeGenerator source
+        public static string ToLiteral(string value)
         {
-            using (var writer = new StringWriter())
-            {
-                cSharpProvider.GenerateCodeFromExpression(new CodePrimitiveExpression(input), writer, null);
-                return writer.ToString();
-            }
-        }
+            StringBuilder b = new StringBuilder(value.Length + 5);
 
+            b.Append("\"");
+
+            for (int i = 0; i < value.Length; i++)
+            {
+                switch (value[i])
+                {
+                    case '\r':
+                        b.Append("\\r");
+                        break;
+                    case '\t':
+                        b.Append("\\t");
+                        break;
+                    case '\"':
+                        b.Append("\\\"");
+                        break;
+                    case '\\':
+                        b.Append("\\\\");
+                        break;
+                    case '\n':
+                        b.Append("\\n");
+                        break;
+                    default:
+                        b.Append(value[i]);
+                        break;
+                }
+            }
+
+            b.Append("\"");
+
+            return b.ToString();
+        }
         public static void WriteEDNToStream(string edn, Stream stream)
         {
             var bytes = Encoding.UTF8.GetBytes(edn);

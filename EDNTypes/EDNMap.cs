@@ -17,7 +17,7 @@ using System.Text;
 
 namespace EDNTypes
 {
-    public class EDNMap : IEnumerable<KeyValuePair<object, object>>, IEDNEnumerable, IEDNWritable
+    public class EDNMap : IEnumerable<KeyValuePair<object, object>>, IEDNEnumerable, IEDNWritable, ICollection, IDictionary, IDictionary<object, object>
     {
         private Dictionary<object, object> ednMap;
 
@@ -57,12 +57,12 @@ namespace EDNTypes
             }
         }
 
+
         #region IEnumerable Members
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            var dictionary = ednMap.Concat(nullKeyValuePair);
-            return dictionary.GetEnumerator();
+            return ((IEnumerable<KeyValuePair<object, object>>)this).GetEnumerator();
         }
 
         #endregion
@@ -71,7 +71,7 @@ namespace EDNTypes
 
         public int Count()
         {
-            return ednMap.Count;
+            return ednMap.Count + nullKeyValuePair.Count();
         }
 
         #endregion
@@ -107,18 +107,6 @@ namespace EDNTypes
                 return ednMap.ContainsKey(key);
         }
 
-        public object this[object key]
-        {
-            get
-            {
-                if (key == null && nullKeyValuePair.Count == 0)
-                    throw new KeyNotFoundException("Could not find key: NULL");
-                else if (key == null && nullKeyValuePair.Count > 0)
-                    return nullKeyValuePair.First().Value;
-                else
-                    return ednMap[key];
-            }
-        }
 
         public override bool Equals(object obj)
         {
@@ -178,6 +166,185 @@ namespace EDNTypes
             stream.Write(Utils.openMapBytes, 0, Utils.openMapBytes.Length);
             handler.handleEnumerable(this, stream);
             stream.Write(Utils.closeMapBytes, 0, Utils.closeMapBytes.Length);
+        }
+
+        #endregion
+
+        #region IDictionary Members
+
+        public void Add(object key, object value)
+        {
+            throw new NotSupportedException();
+        }
+
+        public void Clear()
+        {
+            throw new NotSupportedException();
+        }
+
+        public bool Contains(object key)
+        {
+            return ContainsKey(key);
+        }
+
+        IDictionaryEnumerator IDictionary.GetEnumerator()
+        {
+            throw new NotSupportedException();
+        }
+
+        public bool IsFixedSize
+        {
+            get { return true; }
+        }
+
+        public bool IsReadOnly
+        {
+            get { return true; }
+        }
+
+        ICollection IDictionary.Keys
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        public void Remove(object key)
+        {
+            throw new NotSupportedException();
+        }
+
+        ICollection IDictionary.Values
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        public object this[object key]
+        {
+            get
+            {
+                if (key == null && nullKeyValuePair.Count == 0)
+                    throw new KeyNotFoundException("Could not find key: NULL");
+                else if (key == null && nullKeyValuePair.Count > 0)
+                    return nullKeyValuePair.First().Value;
+                else
+                    return ednMap[key];
+            }
+            set
+            {
+                throw new NotSupportedException();
+            }
+        }
+       
+        #endregion
+
+        #region ICollection Members
+
+        public void CopyTo(Array array, int index)
+        {
+            int n = index;
+            foreach (var kvp in this)
+            {
+                array.SetValue(kvp, n);
+                n++;
+            }
+        }
+
+        int ICollection.Count
+        {
+            get { return Count(); }
+        }
+
+        public bool IsSynchronized
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        public object SyncRoot
+        {
+            get { throw new NotSupportedException(); }
+        }
+
+        #endregion
+
+        #region IDictionary<object,object> Members
+
+
+        public ICollection<object> Keys
+        {
+            get {
+                var keys = ednMap.Keys.ToList();
+
+                if (nullKeyValuePair.Count > 0)
+                    return keys.Concat(new object[] { nullKeyValuePair.First().Key }).ToList();
+                else
+                    return keys;
+            }
+        }
+
+        bool IDictionary<object, object>.Remove(object key)
+        {
+            throw new NotSupportedException();
+        }
+
+        public bool TryGetValue(object key, out object value)
+        {
+            if (ContainsKey(key))
+            {
+                value = this[key];
+                return true;
+            }
+            else
+            {
+                value = null;
+                return false;
+            }
+        }
+
+        public ICollection<object> Values
+        {
+            get
+            {
+                var values = ednMap.Values.ToList();
+
+                if (nullKeyValuePair.Count > 0)
+                    return values.Concat(new object[] { nullKeyValuePair.First().Value }).ToList();
+                else
+                    return values;
+            }
+        }
+
+        #endregion
+
+        #region ICollection<KeyValuePair<object,object>> Members
+
+        public void Add(KeyValuePair<object, object> item)
+        {
+            throw new NotSupportedException();
+        }
+
+        public bool Contains(KeyValuePair<object, object> item)
+        {
+            foreach (var kvp in this)
+            {
+                if (kvp.Key.Equals(item.Key) && kvp.Value.Equals(item.Value))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public void CopyTo(KeyValuePair<object, object>[] array, int arrayIndex)
+        {
+            this.CopyTo((Array)array, arrayIndex);
+        }
+
+        int ICollection<KeyValuePair<object, object>>.Count
+        {
+            get { return this.Count(); }
+        }
+
+        public bool Remove(KeyValuePair<object, object> item)
+        {
+            throw new NotSupportedException();
         }
 
         #endregion
