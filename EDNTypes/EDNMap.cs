@@ -189,7 +189,7 @@ namespace EDNTypes
 
         IDictionaryEnumerator IDictionary.GetEnumerator()
         {
-            throw new NotSupportedException();
+            return  new EDNDictEnumerator(this);
         }
 
         public bool IsFixedSize
@@ -345,6 +345,51 @@ namespace EDNTypes
         public bool Remove(KeyValuePair<object, object> item)
         {
             throw new NotSupportedException();
+        }
+
+        #endregion
+    }
+
+    public class EDNDictEnumerator : IDictionaryEnumerator
+    {
+        IEnumerator _enumerator;
+
+        public EDNDictEnumerator(IEnumerable enumerable)
+        {
+            _enumerator = enumerable.GetEnumerator();
+        }
+
+        public DictionaryEntry Entry
+        {
+            get { return new DictionaryEntry(((KeyValuePair<object, object>)_enumerator.Current).Key, 
+                    ((KeyValuePair<object, object>)_enumerator.Current).Value); }
+        }
+
+        public object Key
+        {
+            get { return ((KeyValuePair<object, object>)_enumerator.Current).Key; }
+        }
+
+        public object Value
+        {
+            get { return ((KeyValuePair<object, object>)_enumerator.Current).Value; }
+        }
+
+        #region IEnumerator Members
+
+        public object Current
+        {
+            get { return _enumerator.Current; }
+        }
+
+        public bool MoveNext()
+        {
+            return _enumerator.MoveNext();
+        }
+
+        public void Reset()
+        {
+            _enumerator.Reset();
         }
 
         #endregion
