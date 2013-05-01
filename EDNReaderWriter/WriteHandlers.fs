@@ -21,11 +21,13 @@ module WriteHandlers =
     type public BaseWriteHandler() = 
 
         interface IWriteHandler with
-            override this.handleObject (obj, stream) = this.handleObject (obj, stream)
-            override this.handleEnumerable (enumerable, stream) = this.handleEnumerable (enumerable, stream)
+            override this.handleObject (obj, stream,parent) = this.handleObject (obj, stream,parent)
+            override this.handleObject (obj, stream) = this.handleObject (obj, stream,null)
+            override this.handleEnumerable (enumerable, stream,parent) = this.handleEnumerable (enumerable, stream,parent)
+            override this.handleEnumerable (enumerable, stream) = this.handleEnumerable (enumerable, stream,null)
 
-        abstract member handleObject: System.Object * Stream -> unit
-        default this.handleObject(obj, stream) =
+        abstract member handleObject: System.Object * Stream * System.Object -> unit
+        default this.handleObject(obj, stream, parent) =            
             match obj with
             | null -> stream.Write(Utils.nullBytes, 0, Utils.nullBytes.Length)
 
@@ -58,17 +60,17 @@ module WriteHandlers =
 
             | :? System.Collections.IDictionary as dict ->
                 stream.Write(Utils.openMapBytes, 0, Utils.openMapBytes.Length)
-                this.handleEnumerable (dict, stream)
+                this.handleEnumerable (dict, stream,obj)
                 stream.Write(Utils.closeMapBytes, 0, Utils.closeMapBytes.Length)
 
             | :? System.Array as array ->
                 stream.Write(Utils.openVectorBytes, 0, Utils.openVectorBytes.Length)
-                this.handleEnumerable (array, stream)
+                this.handleEnumerable (array, stream,obj)
                 stream.Write(Utils.closeVectorBytes, 0, Utils.closeVectorBytes.Length)
 
             | :? System.Collections.IList as lst ->
                 stream.Write(Utils.openListBytes, 0, Utils.openListBytes.Length)
-                this.handleEnumerable (lst, stream)
+                this.handleEnumerable (lst, stream,obj)
                 stream.Write(Utils.closeListBytes, 0, Utils.closeListBytes.Length)
 
             | _ as obj ->
@@ -79,25 +81,28 @@ module WriteHandlers =
                     if genericType.Name = "KeyValuePair`2" then
                         let key = typ.GetProperty("Key").GetValue(obj, null)
                         let value = typ.GetProperty("Value").GetValue(obj, null)
-                        this.handleObject(key, stream)
+                        let indictionary = parent :? IDictionary
+                        if not indictionary then stream.Write(Utils.openVectorBytes, 0, Utils.openVectorBytes.Length)
+                        this.handleObject(key, stream,obj)
                         stream.Write(Utils.spaceBytes, 0, Utils.spaceBytes.Length);
-                        this.handleObject(value, stream)
+                        this.handleObject(value, stream,obj)
+                        if not indictionary then stream.Write(Utils.closeVectorBytes, 0, Utils.closeVectorBytes.Length)
                     elif Seq.exists (fun (t : System.Type) -> t.Name = "ISet`1") (genericType.GetInterfaces() :> seq<System.Type>)   then
                         let set = obj :?> System.Collections.IEnumerable
                         stream.Write(Utils.openSetBytes, 0, Utils.openSetBytes.Length)
-                        this.handleEnumerable (set, stream)
+                        this.handleEnumerable (set, stream,obj)
                         stream.Write(Utils.closeSetBytes, 0, Utils.closeSetBytes.Length)
                     else
                         raise (System.Exception("Cannot write edn for type " + obj.GetType().ToString()))
                 else
                     raise (System.Exception("Cannot write edn for type " + obj.GetType().ToString()))
                     
-        abstract member handleEnumerable: IEnumerable * Stream -> unit
-        default this.handleEnumerable (enumerable, stream) =
+        abstract member handleEnumerable: IEnumerable * Stream * System.Object ->  unit
+        default this.handleEnumerable (enumerable, stream,parent) =            
             let enumerator = enumerable.GetEnumerator()
             let mutable movedNext = enumerator.MoveNext()
             while movedNext do
-                this.handleObject (enumerator.Current, stream)
+                this.handleObject (enumerator.Current, stream,parent)
                 movedNext <- enumerator.MoveNext()
                 if movedNext then
                     stream.Write(Utils.spaceBytes, 0, Utils.spaceBytes.Length)

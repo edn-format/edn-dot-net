@@ -9,11 +9,8 @@
 //   Authors: Dimitrios Kapsalis, Mark Perrotta
 //
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EDNTypes
 {
@@ -138,7 +135,7 @@ namespace EDNTypes
         public virtual void WriteEDN(System.IO.Stream stream, IWriteHandler handler)
         {
             stream.Write(Utils.openListBytes, 0, Utils.openListBytes.Length);
-            handler.handleEnumerable(this, stream);
+            handler.handleEnumerable(this, stream,this);
             stream.Write(Utils.closeListBytes, 0, Utils.closeListBytes.Length);
         }
 
@@ -160,7 +157,7 @@ namespace EDNTypes
         public override void WriteEDN(System.IO.Stream stream, IWriteHandler handler)
         {
             stream.Write(Utils.openVectorBytes, 0, Utils.openVectorBytes.Length);
-            handler.handleEnumerable(this, stream);
+            handler.handleEnumerable(this, stream,this);
             stream.Write(Utils.closeVectorBytes, 0, Utils.closeVectorBytes.Length);
         }
 

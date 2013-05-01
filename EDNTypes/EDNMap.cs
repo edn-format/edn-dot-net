@@ -164,7 +164,7 @@ namespace EDNTypes
         public void WriteEDN(System.IO.Stream stream, IWriteHandler handler)
         {
             stream.Write(Utils.openMapBytes, 0, Utils.openMapBytes.Length);
-            handler.handleEnumerable(this, stream);
+            handler.handleEnumerable(this, stream,this);
             stream.Write(Utils.closeMapBytes, 0, Utils.closeMapBytes.Length);
         }
 

@@ -30,13 +30,13 @@ namespace EDNReaderTestCS
         private static readonly Byte[] keyBaseUtcOffsetBytes = Encoding.UTF8.GetBytes(":BaseUtcOffset");
         private static readonly Byte[] keyStandardDisplayNameBytes = Encoding.UTF8.GetBytes(":StandardDisplayName");
 
-        public override void handleObject(object obj, System.IO.Stream stream)
+        public override void handleObject(object obj, System.IO.Stream stream,Object parent)
         {
             // If obj is a type that I want to handle, in this case System.TimeZoneInfo, handle it here.
             // Otherwise run the default BaseWriterHandler
-            if (obj.GetType() == typeof(System.TimeZoneInfo))
+            if (obj is TimeZoneInfo)
             {
-                System.TimeZoneInfo tz = (System.TimeZoneInfo)obj;
+                var tz = (System.TimeZoneInfo)obj;
 
                 stream.Write(tagBytes, 0, tagBytes.Length);
                 stream.Write(Utils.openMapBytes, 0, Utils.openMapBytes.Length);
@@ -56,12 +56,12 @@ namespace EDNReaderTestCS
                 stream.Write(Utils.closeMapBytes, 0, Utils.closeMapBytes.Length);
             }
             else
-                base.handleObject(obj, stream);
+                base.handleObject(obj, stream,parent);
         }
 
-        public override void handleEnumerable(System.Collections.IEnumerable enumerable, System.IO.Stream stream)
+        public override void handleEnumerable(System.Collections.IEnumerable enumerable, System.IO.Stream stream,Object parent)
         {
-            base.handleEnumerable(enumerable, stream);
+            base.handleEnumerable(enumerable,stream, parent);
         }
     }
 }

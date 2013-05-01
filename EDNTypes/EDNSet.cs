@@ -123,7 +123,7 @@ namespace EDNTypes
         public void WriteEDN(System.IO.Stream stream, IWriteHandler handler)
         {
             stream.Write(Utils.openSetBytes, 0, Utils.openSetBytes.Length);
-            handler.handleEnumerable(this, stream);
+            handler.handleEnumerable(this, stream,this);
             stream.Write(Utils.closeSetBytes, 0, Utils.closeSetBytes.Length);
         }
 

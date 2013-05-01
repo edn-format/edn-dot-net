@@ -215,6 +215,27 @@ namespace EDNReaderTestCS
             testNetRet = EDNReader.EDNReaderFuncs.readString(s);
 
             Funcs.Assert(testNetRet.First() is EDNVector);
+
+            //ET Test using KeyValue pairs outside of dictionaties.
+            var lstkv = new List<KeyValuePair<Int32, string[]>>()
+                {
+                    new KeyValuePair<int, string[]>(1, new string[] {"fred", "wilma"})
+                    ,
+                    new KeyValuePair<int, string[]>(2, new string[] {"again", "whatever"})
+                };
+            s = EDNWriter.EDNWriterFuncs.writeString(lstkv);
+            testNetRet = EDNReader.EDNReaderFuncs.readString(s);
+            //ET Make sure all the items in the list are EDNVectors
+            Funcs.Assert(testNetRet.First() is EDNList
+                && ((EDNList)testNetRet.First()).All(l => l is EDNVector));
+            // ET Each EDNVector should have a list with pairs where the 1st element is an int and the second is a EDNVector of strings
+            var vecenum = ((EDNList) testNetRet.First())
+                .Cast<EDNVector>()
+                .Select(x => x.Select((v, i) => new {Index = i, Value = v})
+                                     .GroupBy(a => a.Index/2)
+                                     .Select(y => y.Select(v => v.Value).ToList()))
+                .Select(mlst => mlst.All(lst => lst[0] is Int32 && lst[1] is EDNVector && lst.All(d=>d is String)))
+                .All(y=>y);
         }
 
 
