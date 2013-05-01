@@ -32,5 +32,6 @@ module EDNWriter =
 
         static member writeStream(obj, stream, (handler : IWriteHandler)) = 
             handler.handleObject(obj, stream)
+            stream
         
 
