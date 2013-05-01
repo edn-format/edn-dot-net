@@ -116,12 +116,13 @@ namespace EDNReaderTestCS
                 using (var ms = new MemoryStream())
                 {
 
-                    EDNWriter.EDNWriterFuncs.writeStream(ednObj, ms);
+                    var stream = EDNWriter.EDNWriterFuncs.writeStream(ednObj, ms);
 
                     ms.Position = 0;
                     var sr = new StreamReader(ms);
                     var stringFromStream = sr.ReadToEnd();
                     Funcs.Assert(teststr.Equals(stringFromStream));
+                    Funcs.Assert(ReferenceEquals(ms, stream));
                     Console.WriteLine("Print Stream: {0}", stringFromStream);
                 }
             }
