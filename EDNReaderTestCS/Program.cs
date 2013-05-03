@@ -236,6 +236,12 @@ namespace EDNReaderTestCS
                                      .Select(y => y.Select(v => v.Value).ToList()))
                 .Select(mlst => mlst.All(lst => lst[0] is Int32 && lst[1] is EDNVector && lst.All(d=>d is String)))
                 .All(y=>y);
+
+            //Test string to keyword conversion
+            EDNKeyword kw = ":testns/keyname";
+            EDNKeyword kw2 = "testns/keyname";
+
+            Funcs.Assert(ReferenceEquals(kw, kw2));
         }
 
 

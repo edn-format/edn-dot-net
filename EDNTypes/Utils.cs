@@ -12,6 +12,9 @@
 using System;
 using System.CodeDom.Compiler;
 using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Linq;
 using System.IO;
 using System.Text;
 
@@ -106,6 +109,37 @@ namespace EDNTypes
                 hash = hash + (obj == null ? 0 : obj.GetHashCode());
             }
             return hash;
+        }
+    }
+
+    public static class ExtMethods
+    {
+        public static ConcurrentDictionary<string, EDNKeyword> InternedKeywords = new ConcurrentDictionary<string, EDNKeyword>();
+        /// <summary>
+        /// Creates an EDNKeyword from a string. A leading colon is not necessary. 
+        /// Supports strings of the form: ":keyword", ":namespace/keyword", "keyword", "namespace/keyword"
+        /// </summary>
+        /// <param name="str">Supports strings of the form: ":keyword", ":namespace/keyword", "keyword", "namespace/keyword". 
+        /// A leading colon is not necessary. </param>
+        /// <returns></returns>
+        public static EDNKeyword kw(this string keyWord)
+        {
+            //get rid of leading ":"
+            string cleanedKeyword = keyWord.TrimStart(':');
+
+            return InternedKeywords.GetOrAdd(cleanedKeyword,
+                str =>
+                {
+                    var keywordParts = cleanedKeyword.Split('/');
+                    if (keywordParts.Count() > 2)
+                        throw new InvalidDataException("Invalid keyword format: " + str);
+
+                    else if (keywordParts.Count() == 1)
+                        return new EDNKeyword("", keywordParts[0]);
+                    else // 2 parts
+                        return new EDNKeyword(keywordParts[0], keywordParts[1]);
+                });
+            
         }
     }
 }

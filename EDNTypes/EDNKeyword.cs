@@ -51,6 +51,11 @@ namespace EDNTypes
                 return false;
         }
 
+        public static implicit operator EDNKeyword(string str)
+        {
+            return str.kw();
+        }
+
         #region IEDNSymbol Members
 
         public string getPrefix()
