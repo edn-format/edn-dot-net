@@ -9,10 +9,22 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EDNTypes</RootNamespace>
-    <AssemblyName>EDNTypes</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <AssemblyName>EDNTypes</AssemblyName>    
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
+  <Choose>  
+    <When Condition="'$(SolutionName)'=='edn-dot-net-2013'">	
+	  <PropertyGroup>
+  	    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+	  <PropertyGroup>
+        <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>	  
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -21,6 +33,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +42,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
