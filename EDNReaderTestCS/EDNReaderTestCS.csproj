@@ -10,30 +10,22 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>EDNReaderTestCS</RootNamespace>
     <AssemblyName>EDNReaderTestCS</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(SolutionName)'=='edn-dot-net-2013'">
+      <PropertyGroup>
+        <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
@@ -42,6 +34,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>bin\Release\</OutputPath>
@@ -51,9 +44,9 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -71,8 +64,18 @@
     <Compile Include="SampleCustomWriter.cs" />
   </ItemGroup>
   <Choose>
+    <When Condition="'$(SolutionName)'=='edn-dot-net-2013'">
+      <ItemGroup>
+        <Reference Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+        <ProjectReference Include="..\EDNReaderWriter\EDNReaderWriter-2013.fsproj">
+          <Project>{8a6173db-bc8c-42dc-ba02-72a9726212f7}</Project>
+          <Name>EDNReaderWriter-2013</Name>
+        </ProjectReference>
+      </ItemGroup>
+    </When>
     <When Condition="'$(SolutionName)'=='edn-dot-net-2012'">
       <ItemGroup>
+        <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
         <ProjectReference Include="..\EDNReaderWriter\EDNReaderWriter-2012.fsproj">
           <Project>{8a6173db-bc8c-42dc-ba02-72a9726212f7}</Project>
           <Name>EDNReaderWriter-2012</Name>
@@ -81,6 +84,7 @@
     </When>
     <When Condition="'$(SolutionName)'=='edn-dot-net'">
       <ItemGroup>
+        <Reference Include="FSharp.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
         <ProjectReference Include="..\EDNReaderWriter\EDNReaderWriter.fsproj">
           <Project>{72e03163-0a92-46c5-8201-78eb4a771beb}</Project>
           <Name>EDNReaderWriter</Name>
@@ -88,11 +92,6 @@
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup>
-    <None Include="app.config">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EDNTypes\EDNTypes.csproj">
       <Project>{5ff5ea7a-1599-4412-aede-33b190244fdf}</Project>
