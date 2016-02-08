@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FFC94509-5D42-48CA-A06A-D4654D63FBD2}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EDDCCA9-75EF-4D35-81BD-A2D162CEA5E1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDNTypes", "EDNTypes\EDNTypes.csproj", "{5FF5EA7A-1599-4412-AEDE-33B190244FDF}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EDNReaderWriter-2013", "EDNReaderWriter\EDNReaderWriter-2013.fsproj", "{8A6173DB-BC8C-42DC-BA02-72A9726212F7}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "EDNReaderTest-2013", "EDNReaderTest\EDNReaderTest-2013.fsproj", "{3E4B81C4-0B07-4B35-8337-268050F70894}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EDNReaderTestCS", "EDNReaderTestCS\EDNReaderTestCS.csproj", "{8A0884C8-D2D8-48FA-B936-A91EC3F39C0F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FF5EA7A-1599-4412-AEDE-33B190244FDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FF5EA7A-1599-4412-AEDE-33B190244FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FF5EA7A-1599-4412-AEDE-33B190244FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FF5EA7A-1599-4412-AEDE-33B190244FDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A6173DB-BC8C-42DC-BA02-72A9726212F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A6173DB-BC8C-42DC-BA02-72A9726212F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A6173DB-BC8C-42DC-BA02-72A9726212F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A6173DB-BC8C-42DC-BA02-72A9726212F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E4B81C4-0B07-4B35-8337-268050F70894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E4B81C4-0B07-4B35-8337-268050F70894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E4B81C4-0B07-4B35-8337-268050F70894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E4B81C4-0B07-4B35-8337-268050F70894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A0884C8-D2D8-48FA-B936-A91EC3F39C0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A0884C8-D2D8-48FA-B936-A91EC3F39C0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A0884C8-D2D8-48FA-B936-A91EC3F39C0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A0884C8-D2D8-48FA-B936-A91EC3F39C0F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
